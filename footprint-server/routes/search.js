@@ -12,8 +12,7 @@ router.use(session({
 router.get("/city", (req, res) => {
     console.log("查询市级列表。。。。。。。。")
     var $pid= req.query.pid;
-    console.log($pid);
-    console.log("111111")
+    console.log($pid)
     var sql = "SELECT cid,pid,cityname,type  FROM city where pid=?";
     pool.query(sql, [$pid], (err, result) => {
         if (err) throw err; 
@@ -28,11 +27,11 @@ router.get("/city", (req, res) => {
 router.get("/capital", (req, res) => {
     console.log("查询地区列表。。。。。。。。")
     var $pid= req.query.pid;
-    // console.log($pid)
+    console.log($pid)
     var sql = "SELECT cid,pid,cityname,type  FROM city where pid=?";
     pool.query(sql, [$pid], (err, result) => {
         if (err) throw err; 
-        // console.log(result);    
+        console.log(result);    
         if (result.length > 0) {
             res.send({ code: 1, msg: "登陆成功", data: result })
         } else {
