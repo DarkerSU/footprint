@@ -56,7 +56,7 @@
                       <div class="clearfix">
                         <el-tag class="tag-gap">萌宠</el-tag>
                         <el-tag class="tag-gap">动物</el-tag>
-                        <el-tag class="tag-gap">喵星人</el-tag>
+                        <el-tag class="tag-gap">喵喵喵</el-tag>
                       </div>
                     </div>
                   </div>
