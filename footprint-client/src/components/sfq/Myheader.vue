@@ -8,7 +8,7 @@
         <el-row :gutter="20">
           <el-col :span="4">
             <div class="headerL">
-              <img src="../../assets/img/sunfuqi/zuji.png" />
+              <img src="../../assets/img/sunfuqi/logo.png" />
               <p>足迹</p>
             </div>
           </el-col>
