@@ -192,7 +192,7 @@
               </el-row>
             </div>
             <div class="infosub">
-              <el-button type="info">重新填写</el-button>
+              <el-button type="info" @click="clearfrom">重新填写</el-button>
               <el-button type="primary" @click="upsubmit">信息提交</el-button>
             </div>
           </div>
@@ -236,6 +236,14 @@ export default {
     imgupload: ImgUpload
   },
   methods: {
+    // 清空填写的数据
+    clearfrom(){
+      this.userlist.uname='';
+      this.userlist.ugender=2;
+      this.userlist.uphone='';
+      this.userlist.uEmail='';
+      this.userlist.textarea='';
+    },
     // 提交用户修改数据
     upsubmit() {
       if (!this.reg_userinfo.reg_unamebool) {
