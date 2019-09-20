@@ -10,7 +10,6 @@
       :on-success="handlesuccess"
       :on-error="handleerror"
       :on-progress="handleprogress"
-     
     >
       <i class="el-icon-plus"></i>
     </el-upload>

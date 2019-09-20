@@ -34,7 +34,7 @@ var storage = multer.diskStorage({
         console.log(file)
         // 将保存文件名设置为 时间戳 + 文件原始名，比如 151342376785-123.jpg
         
-        cb(null,Date.now()+'.'+ file.originalname.split('.')[1]);
+        cb(null,Date.now()+Math.floor(Math.random()*9999)+'.'+ file.originalname.split('.')[1]);
 
     }
 })
