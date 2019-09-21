@@ -102,11 +102,9 @@ router.post("/updateuserinfo", (req, res) => {
 router.put("/updateUserPwd", (req, res) => {
     console.log("用户修改密码请求。。。。。。。。。")
     var obj=req.body;
-    console.log(obj);
     var sql = "UPDATE user set upwd=?  where unum=?";
     pool.query(sql, [obj.newpwd1, obj.unum], (err, result) => {
         if (err) throw err;
-        // console.log(result)
         if (result.affectedRows > 0) {
             console.log("用户密码修改成功");
             res.send({ code: 1, msg: "修改成功"})
