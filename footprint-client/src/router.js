@@ -10,6 +10,8 @@ import UpdatePwd from './views/sxp/UpdatePwd.vue'
 import UpdateUserInfo from './views/sxp/UpdateUserInfo.vue'
 import FootprintTheme from './views/sxp/FootprintTheme'
 import Tablee from './views/sfq/Tablee'
+import UserManagement from './views/sfq/UserManagement'
+// import Test1 from './views/sxp/Test1.vue';
 Vue.use(Router)
 
 export default new Router({
@@ -44,7 +46,11 @@ export default new Router({
           name: 'user',
           component: Tablee,
         },
-
+        {
+          path: '/userManagement',
+          name: 'userManagement',
+          component: UserManagement,
+        },
         {
           path: '/updatepwd',
           name: 'updatepwd',

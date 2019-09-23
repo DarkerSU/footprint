@@ -11,7 +11,7 @@
         </el-aside>
         <el-main class="footprint-user">
           <!-- <personalbody></personalbody> -->
-          <router-view></router-view>
+          <router-view v-if="isRouterAlive"></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -26,9 +26,15 @@ import PersonalPage from "../views/lww/PersonalPage";
 // import PersonalBody from './sxp/PersonalBody'
 import Myfooter from "./zxm/Myfooter";
 export default {
+  provide(){
+    return{
+      reload:this.reload
+    }
+  },
   data() {
     return {
-      selectM: 0
+      selectM: 0,
+      isRouterAlive:true,
     };
   },
   components: {
@@ -39,6 +45,12 @@ export default {
     // personalbody:PersonalBody
   },
   methods: {
+    reload(){
+      this.isRouterAlive=false;
+      this.$nextTick(()=>{
+        this.isRouterAlive=true;
+      })
+    },
     // 用于接收子组件传来的值
     getselect(i) {
       console.log(`孩子给的:${i}`);
@@ -47,6 +59,12 @@ export default {
     },
     // body页面内容路由跳转函数
     getHome() {
+      var userinfo=JSON.parse(sessionStorage.getItem("UserInfo"));
+      var unum=userinfo.unum;
+      console.log(unum)
+      // if(unum){
+
+      // }
       console.log(this.selectM);
       switch (this.selectM) {
         case 1.1:
@@ -61,13 +79,15 @@ export default {
         case 4.1:
           this.$router.push("/user");
           break;
+        case 4.2:
+          this.$router.push("/userManagement");
+          break;
         case 5.1:
           this.$router.push("/userinfoupdate");
           break;
         case 5.2:
           this.$router.push("/updatepwd");
           break;
-
         // case 7.2:
         //   this.$router.push("/updatepwd");
         //   break;

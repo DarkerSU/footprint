@@ -20,7 +20,12 @@
                 ></el-input>
               </el-col>
               <el-col :span="12">
-                <div class="updatePwd-tishi"></div>
+                <div class="updatePwd-tishi">
+                   <span
+                    class="ts"
+                    :class="reg_userpwd.reg_oldpwd==1?'active el-icon-circle-close':''"
+                  >密码不能为空</span>
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -224,5 +229,7 @@ export default {
 .updatePwd-tishi {
   padding: 10px 0;
   color: #aaa;
+  font-size:14px 
+
 }
 </style>

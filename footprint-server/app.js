@@ -4,7 +4,7 @@ const session = require("express-session");
 const bodyParser = require('body-parser');
 const login=require("./routes/login");
 const user=require("./routes/user");
-// const details=require("./routes/details");
+const role=require("./routes/role");
 // const products=require("./routes/products");
 const img=require('./routes/img')
 const search=require("./routes/search")
@@ -42,7 +42,7 @@ app.use("/search",search);
 app.use("/login",login);
 app.use("/user",user);
 app.use("/img",img);
-// app.use("/details",details);
+app.use("/role",role);
 // app.use("/products",products);
 
 

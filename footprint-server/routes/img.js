@@ -1,7 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const multer = require('multer')
-const fs=require('fs')
+const fs = require('fs')
 const router = express.Router();
 const pool = require("../pool");
 
@@ -32,16 +32,10 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         console.log(file)
-        // 将保存文件名设置为 时间戳 + 文件原始名，比如 151342376785-123.jpg
-        
-        cb(null,Date.now()+Math.floor(Math.random()*9999)+'.'+ file.originalname.split('.')[1]);
-
+        // 将保存文件名设置为 时间戳 + 四位随机数，比如 151342376785-1223.jpg
+        cb(null, Date.now() +'-'+ Math.floor(Math.random() * 9999) + '.' + file.originalname.split('.')[1]);
     }
 })
-
-
-
-
 var upload = multer({
     storage: storage
 });
@@ -52,7 +46,8 @@ router.post('/file', upload.single('file'), function (req, res) {
     console.log("接收文件........")
     let avatar = req.file
     console.log(avatar)
-    console.log(avatar.path)
+    console.log(avatar.path);
+    // console.log(avatar.path.split('\'));
     // console.log(req.body)
     if (!avatar) {
         fs.unlink(avatar.path, (e) => {
@@ -63,7 +58,7 @@ router.post('/file', upload.single('file'), function (req, res) {
                 console.log('文件:' + avatar.path + '删除成功！');
         });
     }
-    res.status(200).send('上传成功');
+    res.status(200).send({msg:'上传成功',data:avatar.path});
 })
 
 module.exports = router;

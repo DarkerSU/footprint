@@ -15,12 +15,15 @@ Vue.config.productionTip = false
 Vue.prototype.axios=axios;
 Vue.prototype.qs=qs;/* 用于post请求 */
 Vue.prototype.$moment=moment;/* 用于时间转换 */
+Vue.prototype.imgURL="http://127.0.0.1:5000/"  /* 配置图片访问路径 */
+Vue.prototype.imgUpload="http://127.0.0.1:5000/img/file"   /* 配置全局图片上传请求 */
 
 // 配置请求时保存基础信息
 axios.defaults.withCredentials=true;
 // 配置axios请求基础路径
 axios.defaults.baseURL = "http://127.0.0.1:5000";
-axios.defaults.imgURL="http://127.0.0.1:5000/img/file"
+// axios.defaults.imgURL="http://127.0.0.1:5000/img/file"
+
 
 Vue.use(ElementUI);
 Vue.use(Echarts);

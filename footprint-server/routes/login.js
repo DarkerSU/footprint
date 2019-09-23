@@ -13,8 +13,8 @@ router.get("/", (req, res) => {
     console.log("发送登陆请求........")
     var unum = req.query.unum;
     var upwd = req.query.upwd;
-    console.log(unum, upwd);
-    var sql = "select uid,uname,upwd,urole,uscore from user where unum=? and upwd=?";
+    // console.log(unum, upwd);
+    var sql = "select unum,uname,urole,uscore from user where unum=? and upwd=md5(?)";
     pool.query(sql, [unum, upwd], (err, result) => {
         if (err) throw err;
         // console.log(result);
@@ -46,8 +46,8 @@ router.get("/register", (req, res) => {
                 console.log("##################################");
                 console.log("开始用户数据注册................");
                 var obj = req.query;
-                var sql = `insert into user set ?`;
-                pool.query(sql, [obj], (err, result) => {
+                var sql = `insert into user (unum,uname,upwd) values (?,?,?)`;
+                pool.query(sql, [obj.unum,obj.uname,obj.upwd,], (err, result) => {
                     if (err) throw err;
                     if (result.affectedRows > 0) {
                         console.log("用户注册数据成功")

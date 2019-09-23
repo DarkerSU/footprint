@@ -96,7 +96,7 @@
                   <div class="picinfo">
                     <el-upload
                       class="pic-upload"
-                      action="http://127.0.0.1:5000/img/file"
+                      :action="imgUpload"
                       :show-file-list="false"
                       :before-upload="uploadbefore"
                       :on-remove="handleRemove"
@@ -104,7 +104,7 @@
                       :on-error="handleerror"
                       :on-progress="handleprogress"
                     >
-                      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                      <img v-if="userlist.upic" :src="userlist.upic" class="avatar" />
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                   </div>
@@ -183,7 +183,7 @@
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 4}"
                     placeholder="请输入内容"
-                    v-model="userlist.textarea"
+                    v-model="userlist.utext"
                   ></el-input>
                 </el-col>
                 <el-col :span="14">
@@ -211,16 +211,16 @@ export default {
   data() {
     return {
       sessionUseriInfo: {
-        unum: "sxp",
+        unum: "3",
         urole: "普通用户"
       },
-      imageUrl: "",
       userlist: {
         uname: "",
         ugender: 2,
         uphone: "",
         uEmail: "",
-        textarea: ""
+        utext: "",
+        upic: ""
       },
       reg_userinfo: {
         reg_uname: 0,
@@ -237,12 +237,12 @@ export default {
   },
   methods: {
     // 清空填写的数据
-    clearfrom(){
-      this.userlist.uname='';
-      this.userlist.ugender=2;
-      this.userlist.uphone='';
-      this.userlist.uEmail='';
-      this.userlist.textarea='';
+    clearfrom() {
+      this.userlist.uname = "";
+      this.userlist.ugender = 2;
+      this.userlist.uphone = "";
+      this.userlist.uEmail = "";
+      this.userlist.textarea = "";
     },
     // 提交用户修改数据
     upsubmit() {
@@ -271,8 +271,8 @@ export default {
                 message: "个人信息修改成功",
                 type: "success"
               });
-            }else{
-              this.$message.error('个人信息修改失败');
+            } else {
+              this.$message.error("个人信息修改失败");
             }
           });
       }
@@ -349,14 +349,16 @@ export default {
     },
     //删除函数
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     // 上传成功函数
     handlesuccess(response, file, fileList) {
       console.log(response);
-      this.userlist.imageUrl = URL.createObjectURL(file.raw);
+      // console.log(file)
+      this.userlist.upic = this.imgURL+response.data;
+      console.log(this.userlist);
       // console.log(file);
-      console.log(fileList[0]);
+      // console.log(fileList);
     },
     // 上传错误函数
     handleerror(err, file, fileList) {
@@ -425,10 +427,12 @@ export default {
 .picinfo .pic-upload .el-upload {
   width: 100% !important;
   height: 100% !important;
+  border-radius: 6px;
 }
 .picinfo .pic-upload .el-upload .avatar {
   width: 100% !important;
   height: 100% !important;
+  border-radius: 6px;
 }
 .update-userinfo .per .picinfo .avatar-uploader-icon {
   font-size: 28px;

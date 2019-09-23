@@ -3,7 +3,7 @@
     <div class="publish-footprint">
       <p class="publish-title">
         发表足迹
-        <span class="">（小提示：小主，至少两条足迹才可发表噢）</span>
+        <span class>（小提示：小主，至少两条足迹才可发表噢）</span>
       </p>
     </div>
     <div class="submit-footprint">
@@ -45,6 +45,11 @@
             </div>
           </div>
           <div class="foot-body">
+            <div class="foot-tag">
+              <el-tooltip class="item" effect="dark" content="小主、为你的本条足迹添加一个标签吧" placement="top">
+                <el-button round class="el-icon-circle-plus-outline">添加标签</el-button>
+              </el-tooltip>
+            </div>
             <div class="foot-img">
               <imgupload class="foot-imgup"></imgupload>
             </div>
@@ -124,18 +129,11 @@ export default {
   },
   watch: {
     fpdate: function(newVal, oldVal) {
-      //   const d = new Date(this.fpdate[0]);
-      //   const resDate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + (d.getDate());
-      // console.log(resDate);
       for (var i = 0; i < this.fpdate.length; i++) {
         const d = new Date(this.fpdate[i]);
         const resDate =
           d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
         this.fpdate1[i] = resDate;
-
-
-
-        
       }
     }
   }
@@ -304,7 +302,13 @@ export default {
   height: 100%;
 }
 .foot-body {
-  margin: 25px 10px 35px 10px;
+  margin: 10px 10px 35px 10px;
+}
+.foot-body .foot-tag{
+  margin-bottom: 10px;
+}
+.foot-body .foot-tag .el-button.is-round{
+  padding: 8px 18px;
 }
 .foot-body .foot-text {
   margin-top: 20px;
@@ -313,7 +317,7 @@ export default {
 }
 .foot-body .foot-text .foot-text-xd {
   margin: 5px 0;
-  font-size: 20px;
+  font: 17px "楷体";
 }
 .foot-body .foot-text .el-textarea {
   min-height: 120px;
