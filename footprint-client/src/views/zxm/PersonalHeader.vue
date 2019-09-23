@@ -5,7 +5,7 @@
     </div>
     <div class="des">
       <p class="user-uname">
-        <span class="id">ID：</span>123456
+        <span class="id">ID：</span>{{uname}}
       </p>
       <ul class="header-des-ul">
         <li>
@@ -38,7 +38,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      uname:"",
+    }
+  },
+  created() {
+    var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
+    console.log(userinfo.uname)
+    this.uname=userinfo.uname
+  },
+};
 </script>
 
 <style>
