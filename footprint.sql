@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2019-09-19 13:57:00
+-- 生成日期： 2019-09-23 12:04:32
 -- 服务器版本： 10.3.16-MariaDB
 -- PHP 版本： 7.1.30
 
@@ -438,6 +438,91 @@ INSERT INTO `city` (`cid`, `pid`, `cityname`, `type`) VALUES
 (396, 34, '澳门', 2),
 (397, 35, '台湾', 2);
 
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `role`
+--
+
+CREATE TABLE `role` (
+  `rid` int(30) NOT NULL COMMENT '角色id',
+  `rname` char(20) NOT NULL COMMENT '角色名称',
+  `rnum` int(10) NOT NULL COMMENT '角色编号'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `role`
+--
+
+INSERT INTO `role` (`rid`, `rname`, `rnum`) VALUES
+(1, '普通用户', 0),
+(2, 'VIP用户', 1),
+(3, '管理员', 2),
+(4, '高级管理员', 3);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `tag`
+--
+
+CREATE TABLE `tag` (
+  `tid` int(11) NOT NULL COMMENT '图片标签id',
+  `ttitle` char(10) NOT NULL COMMENT '图片标签名',
+  `tpid` int(10) NOT NULL COMMENT '标签类型id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `tag`
+--
+
+INSERT INTO `tag` (`tid`, `ttitle`, `tpid`) VALUES
+(1, '古镇', 1),
+(2, '山水', 1),
+(3, '美食', 1),
+(4, '革命盛地', 1),
+(5, '旅行', 1),
+(6, '萌宠', 1),
+(7, '科技', 1),
+(8, '高原风光', 1),
+(9, '水乡', 1),
+(10, '沿途美食', 1),
+(11, '雪花', 1);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `user`
+--
+
+CREATE TABLE `user` (
+  `uid` int(10) NOT NULL COMMENT '用户id',
+  `unum` char(30) NOT NULL COMMENT '用户账号，用于登陆账号',
+  `uname` char(30) NOT NULL COMMENT '用户名，用于网页显示',
+  `upwd` char(50) NOT NULL COMMENT '用户密码',
+  `ugender` int(2) DEFAULT NULL COMMENT '用户性别',
+  `uphone` char(11) DEFAULT NULL COMMENT '用户电话号码',
+  `uEmail` char(30) DEFAULT NULL COMMENT '用户Email',
+  `urole` int(3) DEFAULT 0 COMMENT '用户角色',
+  `rnum` int(3) NOT NULL COMMENT '角色编号',
+  `uscore` int(50) DEFAULT 0 COMMENT '用户积分',
+  `upic` char(255) DEFAULT NULL COMMENT '用户头像地址',
+  `utext` varchar(500) DEFAULT NULL COMMENT '用户备注信息'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `user`
+--
+
+INSERT INTO `user` (`uid`, `unum`, `uname`, `upwd`, `ugender`, `uphone`, `uEmail`, `urole`, `rnum`, `uscore`, `upic`, `utext`) VALUES
+(1, 'zxm', '朱雪梅', 'cc4b5438803d71cfb5360653a1f70352', 0, '123123123', '1238612', 2, 2, 1, '1231231212', '123456789765432345'),
+(2, 'sfq', '孙复棋', '935e5508d5a6b59b819a7f0dada27eb6', 1, '11', '11', 1, 1, 11, '', '11'),
+(3, 'lww', '陆伟伟', 'f15f46e1607e89304b9f9115492bd947', 1, '13312345678', 'lww111@163.com', 2, 2, 112, '', '修改信息'),
+(4, 'sxp', '苏晓鹏', '2153a452ad28d2466892ec78fc09dbf5', 1, '121212', '12212', 2, 2, 0, NULL, '1'),
+(5, 'admin', '高级管理员', '0192023a7bbd73250516f069df18b500', NULL, '13567825627', '1369866743@163.com', 0, 0, 120, NULL, NULL),
+(6, 'ss', 'peng', 'e10adc3949ba59abbe56e057f20f883e', 0, '111111', '111', 1, 1, 0, '', '额外翁认为'),
+(14, '13607002109', 'nbb', 'sxp123456', 0, '', '', 1, 1, 0, '', '');
+
 --
 -- 转储表的索引
 --
@@ -447,6 +532,47 @@ INSERT INTO `city` (`cid`, `pid`, `cityname`, `type`) VALUES
 --
 ALTER TABLE `city`
   ADD PRIMARY KEY (`cid`);
+
+--
+-- 表的索引 `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`rid`);
+
+--
+-- 表的索引 `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`tid`);
+
+--
+-- 表的索引 `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `rnum` (`rnum`);
+
+--
+-- 在导出的表使用AUTO_INCREMENT
+--
+
+--
+-- 使用表AUTO_INCREMENT `role`
+--
+ALTER TABLE `role`
+  MODIFY `rid` int(30) NOT NULL AUTO_INCREMENT COMMENT '角色id', AUTO_INCREMENT=5;
+
+--
+-- 使用表AUTO_INCREMENT `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `tid` int(11) NOT NULL AUTO_INCREMENT COMMENT '图片标签id', AUTO_INCREMENT=12;
+
+--
+-- 使用表AUTO_INCREMENT `user`
+--
+ALTER TABLE `user`
+  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT COMMENT '用户id', AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
