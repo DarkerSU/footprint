@@ -22,8 +22,8 @@
         v-for="count in fp"
         :key="count"
       >
-        <div class="add-footprint-img">
-          <div class="toponymy"></div>
+        <div class="add-footprint-img" @click="selectEarth(count)">
+          <div class="toponymy">{{country[count-1]}}</div>
         </div>
         <div class="add-footprint-time">
           <!-- 用户添加作品时，显示时间选择框 -->
@@ -32,7 +32,7 @@
         <el-card class="add-footprint-body">
           <div class="foot-title">
             <div class="fpshow">
-              <span>地点：南京明故宫</span>
+              <span>地点：{{site[count-1]}}</span>
               <span>
                 时间：
                 <span class="select-time">{{fpdate1[count]}}</span>
@@ -74,11 +74,28 @@
         </el-tooltip>
       </el-timeline-item>
     </el-timeline>
+
+    <!-- 地图弹框 -->
+    <el-dialog
+      class="selectMap"
+      title="提示"
+      :visible.sync="Earthdialog"
+      width="80%"
+      height="80%"
+      :before-close="handleClose"
+    >
+      <fpmap @getselectMap="getselectMap"></fpmap>
+      <span slot="footer" class="dialog-footer">
+        <!-- <el-button @click="Earthdialog = false">取 消</el-button>
+        <el-button type="primary" @click="Earthdialog = false">确 定</el-button>-->
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import ImgUpload from "./ImgUpload1";
+import MAP from "../lww/map";
 export default {
   data() {
     return {
@@ -88,13 +105,73 @@ export default {
       // value1: "",
       value: ``,
       fp: 2,
-      textarea: ""
+      textarea: "",
+      Earthdialog: false /* 地图弹框 */,
+      site: [] /* 地点位置 */,
+      lng_lat: [] /* 经纬度数组 */,
+      country: [] /* 地区数组 */,
+      selectMap: [{ site: "" }]
     };
   },
   components: {
-    imgupload: ImgUpload
+    imgupload: ImgUpload,
+    fpmap: MAP
   },
   methods: {
+    // 用于接收地图组件传来的值
+    getselectMap(i) {
+      console.log(`孩子给的:${i}`);
+      // console.log(JSON.parse(i));
+      // if (i) {
+      //   return JSON.parse(i);
+      // } else {
+      //   return 0;
+      // }
+      var Mapsite =JSON.parse(i)
+      this.site.push(Mapsite.site); /* 将地点写进数组 */
+      this.country.push(Mapsite.area); /* 将地区写进数组 */
+      delete Mapsite.site; /* 删除地点信息 */
+      delete Mapsite.area; /* 删除地区信息 */
+      this.lng_lat.push(Mapsite); /*将经纬度写进数组，生成坐标数组 */
+      console.log(this.site);
+      console.log(this.country);
+      console.log(this.lng_lat);
+        this.Earthdialog = false;
+    },
+    // 点击地图
+    selectEarth(count) {
+      this.Earthdialog = true;
+      var Mapsite = this.getselectMap(); /* 得到地图传过来的参数 */
+      console.log(this.site);
+      if (this.site[count - 1]) {
+        this.site.splice(count - 1, 1, Mapsite.site);
+        this.country.splice(count - 1, 1, Mapsite.area);
+        delete Mapsite.site; /* 删除地点信息 */
+        delete Mapsite.area; /* 删除地区信息 */
+        this.lng_lat.splice(count - 1, 1, Mapsite);
+      } else {
+        console.log("222");
+      //   this.site.push(Mapsite.site); /* 将地点写进数组 */
+      // this.country.push(Mapsite.area); /* 将地区写进数组 */
+      // delete Mapsite.site; /* 删除地点信息 */
+      // delete Mapsite.area; /* 删除地区信息 */
+      // this.lng_lat.push(Mapsite); /*将经纬度写进数组，生成坐标数组 */
+      // 
+      }
+      console.log(this.site);
+      console.log(this.country)
+      console.log(this.lng_lat)
+      // this.Earthdialog = false;
+      
+    },
+    /* 弹框关闭提示 */
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
     //接收子组件emit的事件
     getImgUrl(data) {
       //data  得到的就是返回的图片路径的相关参数
@@ -228,9 +305,9 @@ export default {
   /* padding:15px 16px 16px 16px;   */
   width: 97%;
   /* height: 97%; */
-  font-size: 30px;
+  font-size: 25px;
   overflow: hidden;
-  padding: 20px 0;
+  padding: 23px 0;
   vertical-align: middle;
 }
 .add-timeline .add-footprint-img img {
@@ -304,10 +381,10 @@ export default {
 .foot-body {
   margin: 10px 10px 35px 10px;
 }
-.foot-body .foot-tag{
+.foot-body .foot-tag {
   margin-bottom: 10px;
 }
-.foot-body .foot-tag .el-button.is-round{
+.foot-body .foot-tag .el-button.is-round {
   padding: 8px 18px;
 }
 .foot-body .foot-text {
@@ -324,5 +401,11 @@ export default {
 }
 .foot-body .foot-text .el-textarea .el-textarea__inner {
   min-height: 120px !important;
+}
+.selectMap .el-dialog__header {
+  border-bottom: 1px solid #ccc;
+}
+.selectMap .el-dialog__body {
+  padding-top: 20px;
 }
 </style>

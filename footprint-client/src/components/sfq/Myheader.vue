@@ -271,6 +271,7 @@ export default {
       // location.reload();
       sessionStorage.clear();
       this.showname = false;
+      this.$router.push("/");
     },
     clear() {
       this.login_unum = -1;
@@ -316,6 +317,7 @@ export default {
               JSON.stringify(res.data.data[0])
             );
             var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
+            
             this.username = userinfo.uname;
           } else {
             //失败 提示
