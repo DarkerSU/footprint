@@ -156,6 +156,7 @@ export default {
           rs.addressComponents.streetNumber +
           rs.surroundingPois[0].title; //地点
         console.log(this.footprintobj);
+        console.log(this.$store.getters.getlng_lat);
       });
       if (!this.polyline.editing) {
         return;

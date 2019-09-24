@@ -41,7 +41,7 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="4-1" @click="handleselect(4.1)">用户列表</el-menu-item>
-          <el-menu-item index="4-2" @click="handleselect(4.2)">用户授权</el-menu-item>
+          <el-menu-item index="4-2" @click="handleselect(4.2)">角色授权</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 

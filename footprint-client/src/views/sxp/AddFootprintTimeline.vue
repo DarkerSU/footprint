@@ -151,6 +151,7 @@ export default {
       console.log(this.site);
       console.log(this.country);
       console.log(this.lng_lat);
+      this.$store.commit("updatalng_lat",this.lng_lat)
     },
     /* 弹框关闭提示 */
     handleClose(done) {

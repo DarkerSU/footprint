@@ -211,7 +211,7 @@ export default {
   data() {
     return {
       sessionUseriInfo: {
-        unum: "3",
+        unum: "",
         urole: "普通用户"
       },
       userlist: {
@@ -355,7 +355,7 @@ export default {
     handlesuccess(response, file, fileList) {
       console.log(response);
       // console.log(file)
-      this.userlist.upic = this.imgURL+response.data;
+      this.userlist.upic = this.imgURL + response.data;
       console.log(this.userlist);
       // console.log(file);
       // console.log(fileList);
@@ -365,7 +365,26 @@ export default {
       console.log(err);
     },
     // 文件上传时的钩子函数，
-    handleprogress(event, file, fileList) {}
+    handleprogress(event, file, fileList) {},
+    // 获取用户登录的信息
+    getUserInfo() {
+      // sessionUseriInfo
+      var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
+      this.sessionUseriInfo.unum = userinfo.unum;
+      if(userinfo.urole==0){
+        this.sessionUseriInfo.urole="普通用户"
+      }else if(userinfo.urole==1){
+        this.sessionUseriInfo.urole="VIP用户"
+      }else if(userinfo.urole==2){
+        this.sessionUseriInfo.urole="管理员"
+      }else if(userinfo.urole==3){
+        this.sessionUseriInfo.urole="高级管理员"
+      }
+      this.userlist.uname=userinfo.uname
+    }
+  },
+  created() {
+    this.getUserInfo();
   }
 };
 </script>
