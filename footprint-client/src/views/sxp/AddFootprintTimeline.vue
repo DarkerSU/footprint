@@ -40,7 +40,7 @@
             </div>
             <div class="fpclose">
               <el-tooltip class="item" effect="dark" content="删除本条足迹" placement="top">
-                <span class="el-icon-error" @click="delfoot"></span>
+                <span class="el-icon-error" @click="delfoot(count)"></span>
               </el-tooltip>
             </div>
           </div>
@@ -110,7 +110,9 @@ export default {
       site: [] /* 地点位置 */,
       lng_lat: [] /* 经纬度数组 */,
       country: [] /* 地区数组 */,
-      selectMap: [{ site: "" }]
+      // selectMap: [{ site: "" }],
+      Mapsite: {},
+      num:0,
     };
   },
   components: {
@@ -122,47 +124,33 @@ export default {
     getselectMap(i) {
       console.log(`孩子给的:${i}`);
       // console.log(JSON.parse(i));
-      // if (i) {
-      //   return JSON.parse(i);
-      // } else {
-      //   return 0;
-      // }
-      var Mapsite =JSON.parse(i)
-      this.site.push(Mapsite.site); /* 将地点写进数组 */
-      this.country.push(Mapsite.area); /* 将地区写进数组 */
-      delete Mapsite.site; /* 删除地点信息 */
-      delete Mapsite.area; /* 删除地区信息 */
-      this.lng_lat.push(Mapsite); /*将经纬度写进数组，生成坐标数组 */
-      console.log(this.site);
-      console.log(this.country);
-      console.log(this.lng_lat);
-        this.Earthdialog = false;
+      var info = JSON.parse(i);
+      this.Mapsite = info;
+      
+      if (this.site[this.num]) {
+        console.log("点击的足迹点有数据，进行修改");
+        this.site.splice(this.num, 1, info.site);
+        this.country.splice(this.num, 1, info.area);
+        delete info.site; /* 删除地点信息 */
+        delete info.area; /* 删除地区信息 */
+        this.lng_lat.splice(this.num, 1, info);
+      } else {
+        console.log("点击的足迹点是新点，没有数据，获取新数据进行插入"); 
+        this.site.push(info.site); /* 将地点写进数组 */
+        this.country.push(info.area); /* 将地区写进数组 */
+        delete info.site; /* 删除地点信息 */
+        delete info.area; /* 删除地区信息 */
+        this.lng_lat.push(info); /*将经纬度写进数组，生成坐标数组 */
+      }
+      this.Earthdialog = false;
     },
     // 点击地图
     selectEarth(count) {
       this.Earthdialog = true;
-      var Mapsite = this.getselectMap(); /* 得到地图传过来的参数 */
+      this.num = count - 1;
       console.log(this.site);
-      if (this.site[count - 1]) {
-        this.site.splice(count - 1, 1, Mapsite.site);
-        this.country.splice(count - 1, 1, Mapsite.area);
-        delete Mapsite.site; /* 删除地点信息 */
-        delete Mapsite.area; /* 删除地区信息 */
-        this.lng_lat.splice(count - 1, 1, Mapsite);
-      } else {
-        console.log("222");
-      //   this.site.push(Mapsite.site); /* 将地点写进数组 */
-      // this.country.push(Mapsite.area); /* 将地区写进数组 */
-      // delete Mapsite.site; /* 删除地点信息 */
-      // delete Mapsite.area; /* 删除地区信息 */
-      // this.lng_lat.push(Mapsite); /*将经纬度写进数组，生成坐标数组 */
-      // 
-      }
-      console.log(this.site);
-      console.log(this.country)
-      console.log(this.lng_lat)
-      // this.Earthdialog = false;
-      
+      console.log(this.country);
+      console.log(this.lng_lat);
     },
     /* 弹框关闭提示 */
     handleClose(done) {
@@ -180,8 +168,11 @@ export default {
     addfoot() {
       this.fp++;
     },
-    delfoot() {
+    delfoot(count) {
       this.fp--;
+      this.site.splice(count - 1, 1);
+      this.country.splice(count - 1, 1);
+      this.lng_lat.splice(count - 1, 1);
     },
     subfootprint() {
       this.$confirm("提交成功后将不能修改, 是否继续?", "提示", {
@@ -212,7 +203,7 @@ export default {
           d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
         this.fpdate1[i] = resDate;
       }
-    }
+    },
   }
 };
 </script>
