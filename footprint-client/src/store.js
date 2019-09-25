@@ -8,6 +8,7 @@ export default new Vuex.Store({
     // 主体颜色更改参数
     themeColor: 0,
     lng_lat:[],
+    fptag:[],
   },
   mutations: {
     updateTheme(state, value) {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     updatalng_lat(state, value) {
       state.lng_lat = value;
     },
+    updatefpTag(state,value){
+      state.fptag=value
+    }
   },
   getters: {
     getThemeColor(state) {
@@ -23,6 +27,9 @@ export default new Vuex.Store({
     },
     getlng_lat(state) {
       return state.lng_lat;
+    },
+    getfpTag(state){
+      return state.fptag;
     }
   },
   actions: {

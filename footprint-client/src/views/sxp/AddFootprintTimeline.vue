@@ -22,9 +22,11 @@
         v-for="count in fp"
         :key="count"
       >
-        <div class="add-footprint-img" @click="selectEarth(count)">
-          <div class="toponymy">{{country[count-1]}}</div>
-        </div>
+        <el-tooltip class="item" effect="dark" content="点击地球可以对你的本条足迹定位哦" placement="top">
+          <div class="add-footprint-img" @click="selectEarth(count)">
+            <div class="toponymy">{{country[count-1]}}</div>
+          </div>
+        </el-tooltip>
         <div class="add-footprint-time">
           <!-- 用户添加作品时，显示时间选择框 -->
           <el-date-picker v-model="fpdate[count]" type="date" placeholder></el-date-picker>
@@ -46,8 +48,13 @@
           </div>
           <div class="foot-body">
             <div class="foot-tag">
+              <ul class="Tag-val">
+                <li v-for="(tag,index) of tagList[count-1]" :key="index">
+                  <el-tag type="success" closable @close="handleCloseTag(tag)">{{tag}}</el-tag>
+                </li>
+              </ul>
               <el-tooltip class="item" effect="dark" content="小主、为你的本条足迹添加一个标签吧" placement="top">
-                <el-button round class="el-icon-circle-plus-outline">添加标签</el-button>
+                <el-button round class="el-icon-circle-plus-outline" @click="addTag(count)">添加标签</el-button>
               </el-tooltip>
             </div>
             <div class="foot-img">
@@ -58,7 +65,7 @@
               <el-input
                 type="textarea"
                 placeholder="请输入内容"
-                v-model="textarea"
+                v-model="textarea[count-1]"
                 maxlength="100"
                 show-word-limit
               ></el-input>
@@ -78,7 +85,7 @@
     <!-- 地图弹框 -->
     <el-dialog
       class="selectMap"
-      title="提示"
+      title="选择地图"
       :visible.sync="Earthdialog"
       width="80%"
       height="80%"
@@ -90,12 +97,24 @@
         <el-button type="primary" @click="Earthdialog = false">确 定</el-button>-->
       </span>
     </el-dialog>
+
+    <!-- 添加标签弹框 -->
+    <el-dialog
+      class="searchTag"
+      title="添加标签"
+      :visible.sync="SearchTagdialog"
+      width="55%"
+      :before-close="handleClose"
+    >
+      <addfptag @PerTag="PerTag" @PerCancel="PerCancel"></addfptag>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import ImgUpload from "./ImgUpload1";
 import MAP from "../lww/map";
+import AddFpTag from "./AddfpTag";
 export default {
   data() {
     return {
@@ -105,28 +124,76 @@ export default {
       // value1: "",
       value: ``,
       fp: 2,
-      textarea: "",
+      textarea: [],
       Earthdialog: false /* 地图弹框 */,
       site: [] /* 地点位置 */,
       lng_lat: [] /* 经纬度数组 */,
       country: [] /* 地区数组 */,
       // selectMap: [{ site: "" }],
-      Mapsite: {},
-      num:0,
+      // Mapsite: {},
+      num: 0,
+
+      /* 标签弹框参数 */
+      SearchTagdialog: false /* 添加标签弹框 */,
+      tagList: [] /* 子组件获取的标签 */,
+      tagobj: {
+        tag1: []
+      },
+      tagisTrue: false,
+      tagnum: 0 /* 用来暂存选中点的数值*/
     };
   },
   components: {
     imgupload: ImgUpload,
-    fpmap: MAP
+    fpmap: MAP,
+    addfptag: AddFpTag
   },
   methods: {
+    // 给您的足迹添加标签
+    addTag(count) {
+      this.SearchTagdialog = true;
+      // console.log(this.tagList[count - 1]);
+      if (this.tagList[count - 1]) {
+        if (this.tagList[count - 1].length > 0) {
+          this.$store.commit("updatefpTag", this.tagList[count - 1]);/* 修改vuex参数 */
+        }
+      }
+      this.tagnum=count-1;/* 获取最新足迹点的标号 */
+      var taginfo = this.$store.getters.getfpTag;/* 通过vuex传参 */
+    },
+    // 接收标签组件的参数
+    PerTag(i) {
+      console.log(`标签组件孩子给的:${i}`);
+      // console.log(JSON.parse(i));
+      this.tagobj.tag1 = JSON.parse(i);
+      var list = this.tagobj;
+      // 如果点击的点已经有标签内容，则修改标签，如果没有则新增标签内容
+      if (this.tagList[this.tagnum]) {
+        console.log("次足迹已经添加标签，进行修改")
+        this.tagList.splice(this.tagnum,1,list.tag1);
+        this.SearchTagdialog = false;
+      } else {
+        console.log("此足迹点无标签")
+        this.tagList.push(list.tag1);
+        this.SearchTagdialog = false;
+      }
+    },
+    /* 接收子组件参数函数 */
+    PerCancel(i) {
+      console.log(`标签组件孩子给的:${i}`);
+      this.SearchTagdialog = i;
+      // console.log(this.tagisTrue);
+    },
+    handleCloseTag(tag) {
+      this.tagList.splice(this.tagList.indexOf(tag), 1);
+    },
     // 用于接收地图组件传来的值
     getselectMap(i) {
-      console.log(`孩子给的:${i}`);
+      console.log(`地图组件孩子给的:${i}`);
       // console.log(JSON.parse(i));
       var info = JSON.parse(i);
-      this.Mapsite = info;
-      
+      // this.Mapsite = info;
+
       if (this.site[this.num]) {
         console.log("点击的足迹点有数据，进行修改");
         this.site.splice(this.num, 1, info.site);
@@ -135,7 +202,7 @@ export default {
         delete info.area; /* 删除地区信息 */
         this.lng_lat.splice(this.num, 1, info);
       } else {
-        console.log("点击的足迹点是新点，没有数据，获取新数据进行插入"); 
+        console.log("点击的足迹点是新点，没有数据，获取新数据进行插入");
         this.site.push(info.site); /* 将地点写进数组 */
         this.country.push(info.area); /* 将地区写进数组 */
         delete info.site; /* 删除地点信息 */
@@ -148,10 +215,10 @@ export default {
     selectEarth(count) {
       this.Earthdialog = true;
       this.num = count - 1;
-      console.log(this.site);
-      console.log(this.country);
-      console.log(this.lng_lat);
-      this.$store.commit("updatalng_lat",this.lng_lat)
+      // console.log(this.site);
+      // console.log(this.country);
+      // console.log(this.lng_lat);
+      this.$store.commit("updatalng_lat", this.lng_lat);
     },
     /* 弹框关闭提示 */
     handleClose(done) {
@@ -174,8 +241,16 @@ export default {
       this.site.splice(count - 1, 1);
       this.country.splice(count - 1, 1);
       this.lng_lat.splice(count - 1, 1);
+      this.tagList.splice(count - 1, 1);
+      // console.log(this.tagList);
     },
     subfootprint() {
+      console.log(this.country);
+      console.log(this.site);
+      console.log(this.fpdate);
+      console.log(this.tagList);
+      console.log(this.textarea)
+
       this.$confirm("提交成功后将不能修改, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -204,7 +279,7 @@ export default {
           d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
         this.fpdate1[i] = resDate;
       }
-    },
+    }
   }
 };
 </script>
@@ -394,10 +469,39 @@ export default {
 .foot-body .foot-text .el-textarea .el-textarea__inner {
   min-height: 120px !important;
 }
-.selectMap .el-dialog__header {
+.selectMap .el-dialog__header,
+.searchTag .el-dialog__header {
   border-bottom: 1px solid #ccc;
 }
 .selectMap .el-dialog__body {
   padding-top: 20px;
+}
+.searchTag .el-dialog__header {
+  background-color: rgb(92, 158, 233);
+}
+.searchTag .el-dialog__header .el-dialog__title {
+  color: #fff;
+  font-size: 20px;
+}
+.searchTag .el-dialog__header .el-dialog__close.el-icon.el-icon-close {
+  color: #fff;
+}
+.searchTag .el-dialog__body {
+  padding: 15px 20px;
+}
+.foot-tag .Tag-val {
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+.foot-tag .Tag-val li {
+  margin: 0 10px;
+  display: inline-block;
+}
+.foot-tag .Tag-val li .el-tag.el-tag--success.el-tag--light {
+  font-size: 17px;
+}
+.foot-tag .el-button.el-tooltip span {
+  font-size: 17px;
 }
 </style>
