@@ -104,7 +104,7 @@
                       :on-error="handleerror"
                       :on-progress="handleprogress"
                     >
-                      <img v-if="userlist.upic" :src="userlist.upic" class="avatar" />
+                      <img v-if="userlist.upic" :src="imgURL+userlist.upic" class="avatar" />
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                   </div>
@@ -353,12 +353,8 @@ export default {
     },
     // 上传成功函数
     handlesuccess(response, file, fileList) {
-      console.log(response);
-      // console.log(file)
-      this.userlist.upic = this.imgURL + response.data;
-      console.log(this.userlist);
-      // console.log(file);
-      // console.log(fileList);
+      console.log(response.data);
+      this.userlist.upic =response.data;
     },
     // 上传错误函数
     handleerror(err, file, fileList) {
@@ -370,7 +366,14 @@ export default {
     getUserInfo() {
       // sessionUseriInfo
       var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
+      console.log(userinfo);
       this.sessionUseriInfo.unum = userinfo.unum;
+      this.userlist.upic=userinfo.upic;
+      this.userlist.uphone=userinfo.uphone;
+      this.userlist.uEmail=userinfo.uEmail;
+      this.userlist.utext=userinfo.utext;
+      this.userlist.uscore=userinfo.uscore;
+      this.userlist.ugender=userinfo.ugender;
       if(userinfo.urole==0){
         this.sessionUseriInfo.urole="普通用户"
       }else if(userinfo.urole==1){
@@ -381,6 +384,7 @@ export default {
         this.sessionUseriInfo.urole="高级管理员"
       }
       this.userlist.uname=userinfo.uname
+
     }
   },
   created() {

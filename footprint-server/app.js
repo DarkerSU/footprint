@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 const login=require("./routes/login");
 const user=require("./routes/user");
 const role=require("./routes/role");
+const fp=require("./routes/footprint");
 // const products=require("./routes/products");
 const img=require('./routes/img')
 const search=require("./routes/search")
 const cors=require("cors");
+
 /*引入路由模块*/
 var app = express();
 app.listen(5000);
@@ -32,7 +34,7 @@ app.use(cors({
 //使用body-parser中间件
 app.use(bodyParser.urlencoded({extended:false}));
 //托管静态资源到public目录下
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 
 /*使用路由器来管理路由*/
@@ -43,6 +45,7 @@ app.use("/login",login);
 app.use("/user",user);
 app.use("/img",img);
 app.use("/role",role);
+app.use("/fp",fp);
 // app.use("/products",products);
 
 

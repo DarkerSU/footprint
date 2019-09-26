@@ -4,7 +4,7 @@
     <div
       class="header"
       :style="$store.getters.getThemeColor==0?'background-color: #202024;'
-      :$store.getters.getThemeColor==1?'background-color: rgb(255, 3, 5);'
+      :$store.getters.getThemeColor==1?'background-color: #d60a16;'
       :$store.getters.getThemeColor==2?'background-color: rgb(25, 143, 240);':''"
     >
       <div class="headerC">
@@ -38,27 +38,24 @@
           </el-col>
           <el-col :span="6">
             <div class="headerR">
-              <div class="headerR-search">
+              <!-- <div class="headerR-search">
                 <input type="text" placeholder="请输入关键词" />
                 <img
                   class="head-search"
                   src="../../assets/img/sunfuqi/b39d74a95caae4e8b27fc020bb89d72.png"
                   alt
                 />
-              </div>
+              </div> -->
               <div class="headerR-text" v-if="!showname">
                 <el-button type="text" @click="dialogFormVisible = true">登录</el-button>
                 <el-button type="text" @click="dialogFormVisibleregister = true">注册</el-button>
               </div>
               <div class="headerR-text" v-if="showname">
                 <div>
-                  <el-avatar
-                    class="head-img"
-                    src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                  ></el-avatar>
+                  <el-avatar class="head-img" :src="imgURL+userlist.upic"></el-avatar>
                   <el-dropdown :hide-on-click="false">
                     <div class="el-dropdown-link">
-                      欢迎您，{{username}}!
+                      欢迎您!{{userlist.uname}}
                       <i class="el-icon-arrow-down el-icon--right"></i>
                     </div>
                     <el-dropdown-menu slot="dropdown">
@@ -259,7 +256,11 @@ export default {
       reg_upwd2: -1,
       formLabelWidth: "120px",
       showname: false,
-      username: '',
+      userlist: {
+        uname: "",
+        upic: ""
+      }
+      // username: '',
     };
   },
   methods: {
@@ -287,7 +288,7 @@ export default {
       this.form.unum = "";
       this.form.upwd = "";
     },
-   
+
     persionalm() {
       this.$router.push("/personal");
     },
@@ -317,8 +318,8 @@ export default {
               JSON.stringify(res.data.data[0])
             );
             var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
-            
-            this.username = userinfo.uname;
+            this.userlist.uname = userinfo.uname;
+            this.userlist.upic = userinfo.upic;
           } else {
             //失败 提示
             this.$message.error("用户名或密码错误");
@@ -480,13 +481,15 @@ export default {
       }
     }
   },
-  created(){
+  created() {
     var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
-    this.username = userinfo.uname;
-    if(this.username){
-      this.showname=true
-    }else{
-      this.showname=false
+    if (userinfo) {
+      this.userlist.uname = userinfo.uname;
+      if (this.userlist.uname) {
+        this.showname = true;
+      } else {
+        this.showname = false;
+      }
     }
   }
 };
@@ -534,6 +537,7 @@ export default {
 }
 
 .header .headerC .headerM {
+  text-align: center;
   padding: 30px 10px;
 }
 
@@ -554,8 +558,9 @@ export default {
 }
 
 .header .headerC .headerR {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
+  text-align: right;
   padding: 20px 2px;
 }
 

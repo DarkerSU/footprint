@@ -12,7 +12,7 @@
       </el-tooltip>
     </div>
     <div class="footprint-title">
-      <el-input v-model="input" class="fptitle" placeholder="小主，为您的足迹起个名吧"></el-input>
+      <el-input v-model="ptitle" class="fptitle" placeholder="小主，为您的足迹起个名吧"></el-input>
     </div>
     <el-timeline>
       <el-timeline-item
@@ -29,7 +29,7 @@
         </el-tooltip>
         <div class="add-footprint-time">
           <!-- 用户添加作品时，显示时间选择框 -->
-          <el-date-picker v-model="fpdate[count]" type="date" placeholder></el-date-picker>
+          <el-date-picker v-model="fpdate[count-1]" type="date" placeholder></el-date-picker>
         </div>
         <el-card class="add-footprint-body">
           <div class="foot-title">
@@ -37,7 +37,7 @@
               <span>地点：{{site[count-1]}}</span>
               <span>
                 时间：
-                <span class="select-time">{{fpdate1[count]}}</span>
+                <span class="select-time">{{fpdate1[count-1]}}</span>
               </span>
             </div>
             <div class="fpclose">
@@ -57,8 +57,8 @@
                 <el-button round class="el-icon-circle-plus-outline" @click="addTag(count)">添加标签</el-button>
               </el-tooltip>
             </div>
-            <div class="foot-img">
-              <imgupload class="foot-imgup"></imgupload>
+            <div class="foot-img" @click="updateImgnum(count)">
+              <imgupload class="foot-imgup" :count="count-1" @getImgUplod="getImgUplod"></imgupload>
             </div>
             <div class="foot-text">
               <p class="foot-text-xd">寄语/心得:</p>
@@ -118,7 +118,7 @@ import AddFpTag from "./AddfpTag";
 export default {
   data() {
     return {
-      input: "",
+      ptitle: "",
       fpdate: [],
       fpdate1: [],
       // value1: "",
@@ -140,7 +140,11 @@ export default {
         tag1: []
       },
       tagisTrue: false,
-      tagnum: 0 /* 用来暂存选中点的数值*/
+      tagnum: 0 /* 用来暂存选中点的数值*/,
+
+      /* 图片子组件参数 */
+      fpImgUpload: [],
+      imgnum: 0,
     };
   },
   components: {
@@ -149,17 +153,40 @@ export default {
     addfptag: AddFpTag
   },
   methods: {
+    /* 接收图片子组件的传的参数 */
+    getImgUplod(i) {
+      console.log(`图片子组件传的参数为${i}`);
+      var obj = JSON.parse(i);
+      // console.log(obj[this.imgnum]);
+      if (this.fpImgUpload[this.imgnum]) {
+        console.log("图片数组中已有主，进行修改");
+        this.fpImgUpload.splice(this.imgnum, 1, obj[this.imgnum]);
+        // this.SearchTagdialog = false;
+      } else {
+        console.log("图片数组没有图片");
+        this.fpImgUpload.push(obj[this.imgnum]);
+      }
+      console.log(this.fpImgUpload);
+    },
+    // 修改图片标识
+    updateImgnum(count) {
+      this.imgnum = count - 1;
+      // console.log(this.imgnum);
+    },
     // 给您的足迹添加标签
     addTag(count) {
       this.SearchTagdialog = true;
       // console.log(this.tagList[count - 1]);
       if (this.tagList[count - 1]) {
         if (this.tagList[count - 1].length > 0) {
-          this.$store.commit("updatefpTag", this.tagList[count - 1]);/* 修改vuex参数 */
+          this.$store.commit(
+            "updatefpTag",
+            this.tagList[count - 1]
+          ); /* 修改vuex参数 */
         }
       }
-      this.tagnum=count-1;/* 获取最新足迹点的标号 */
-      var taginfo = this.$store.getters.getfpTag;/* 通过vuex传参 */
+      this.tagnum = count - 1; /* 获取最新足迹点的标号 */
+      var taginfo = this.$store.getters.getfpTag; /* 通过vuex传参 */
     },
     // 接收标签组件的参数
     PerTag(i) {
@@ -169,11 +196,11 @@ export default {
       var list = this.tagobj;
       // 如果点击的点已经有标签内容，则修改标签，如果没有则新增标签内容
       if (this.tagList[this.tagnum]) {
-        console.log("次足迹已经添加标签，进行修改")
-        this.tagList.splice(this.tagnum,1,list.tag1);
+        console.log("次足迹已经添加标签，进行修改");
+        this.tagList.splice(this.tagnum, 1, list.tag1);
         this.SearchTagdialog = false;
       } else {
-        console.log("此足迹点无标签")
+        console.log("此足迹点无标签");
         this.tagList.push(list.tag1);
         this.SearchTagdialog = false;
       }
@@ -245,12 +272,26 @@ export default {
       // console.log(this.tagList);
     },
     subfootprint() {
-      console.log(this.country);
-      console.log(this.site);
-      console.log(this.fpdate);
-      console.log(this.tagList);
-      console.log(this.textarea)
-
+      var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
+      // console.log(userinfo.unum);
+      // console.log(this.ptitle);
+      // console.log(this.country);
+      // console.log(this.site);
+      // console.log(this.fpdate);
+      // console.log(this.tagList);
+      // console.log(this.textarea);
+      var data = {
+        spcountry: this.country,
+        spsite: this.site,
+        spfpdate: this.fpdate,
+        sptagList: this.tagList,
+        sptextarea: this.textarea,
+        spimgUrl:this.fpImgUpload,
+      };
+      var datainfo = {
+        unum: userinfo.unum,
+        ptitle: this.ptitle
+      };
       this.$confirm("提交成功后将不能修改, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -258,10 +299,50 @@ export default {
         center: true
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+          this.axios
+            .post("/fp/addfp", this.qs.stringify(datainfo))
+            .then(res => {
+              console.log(res.data.data);
+              data.spnum = res.data.data;
+              console.log(data);
+              for (var i = 0; i < data.spsite.length; i++) {
+                this.axios
+                  .get("/fp/addContent", {
+                    params: {
+                      spnum: data.spnum,
+                      spsite: data.spsite[i],
+                      spcountry: data.spcountry[i],
+                      spfpdate: data.spfpdate[i],
+                      sptagList: JSON.stringify(data.sptagList[i]),
+                      sptextarea: data.sptextarea[i],
+                      spimgUrl:JSON.stringify(data.spimgUrl[i]),
+                    }
+                  })
+                  .then(res1 => {
+                    if (res1.data.code == 1) {
+                      console.log("足迹内容插入成功");
+                      this.$message({
+                        type: "success",
+                        message: "新增足迹成功!"
+                      });
+                    }
+                  });
+              }
+              // if (res.data.code == 1) {
+              //   console.log(data.spsite.length);
+              //   console.log("标题插入成功");
+
+              //   this.$message({
+              //     type: "success",
+              //     message: "新增足迹成功!"
+              //   });
+              // } else {
+              //   this.$message.error("新增足迹失败!");
+              // }
+            })
+            .catch(err => {
+              this.$message.error("新增足迹失败!");
+            });
         })
         .catch(() => {
           this.$message({

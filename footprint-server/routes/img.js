@@ -46,8 +46,9 @@ router.post('/file', upload.single('file'), function (req, res) {
     console.log("接收文件........")
     let avatar = req.file
     console.log(avatar)
-    console.log(avatar.path);
-    // console.log(avatar.path.split('\'));
+    // console.log(avatar.path);
+    var path=avatar.path.split('\\').splice(1).join('/');
+    // console.log(path);
     // console.log(req.body)
     if (!avatar) {
         fs.unlink(avatar.path, (e) => {
@@ -58,7 +59,7 @@ router.post('/file', upload.single('file'), function (req, res) {
                 console.log('文件:' + avatar.path + '删除成功！');
         });
     }
-    res.status(200).send({msg:'上传成功',data:avatar.path});
+    res.status(200).send({msg:'上传成功',data:path});
 })
 
 module.exports = router;

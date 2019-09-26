@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
     var unum = req.query.unum;
     var upwd = req.query.upwd;
     // console.log(unum, upwd);
-    var sql = "select unum,uname,urole,uscore from user where unum=? and upwd=md5(?)";
+    var sql = "select unum,uname,urole,uscore,ugender,uEmail,uphone,upic,utext from user where unum=? and upwd=md5(?)";
     pool.query(sql, [unum, upwd], (err, result) => {
         if (err) throw err;
         // console.log(result);
