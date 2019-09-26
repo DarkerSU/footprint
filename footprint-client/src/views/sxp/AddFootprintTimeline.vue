@@ -321,24 +321,15 @@ export default {
                   .then(res1 => {
                     if (res1.data.code == 1) {
                       console.log("足迹内容插入成功");
+        
                       this.$message({
                         type: "success",
                         message: "新增足迹成功!"
                       });
+                      return ;
                     }
                   });
               }
-              // if (res.data.code == 1) {
-              //   console.log(data.spsite.length);
-              //   console.log("标题插入成功");
-
-              //   this.$message({
-              //     type: "success",
-              //     message: "新增足迹成功!"
-              //   });
-              // } else {
-              //   this.$message.error("新增足迹失败!");
-              // }
             })
             .catch(err => {
               this.$message.error("新增足迹失败!");

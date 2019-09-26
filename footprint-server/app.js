@@ -6,6 +6,7 @@ const login=require("./routes/login");
 const user=require("./routes/user");
 const role=require("./routes/role");
 const fp=require("./routes/footprint");
+const fp70=require("./routes/fp70");
 // const products=require("./routes/products");
 const img=require('./routes/img')
 const search=require("./routes/search")
@@ -46,6 +47,7 @@ app.use("/user",user);
 app.use("/img",img);
 app.use("/role",role);
 app.use("/fp",fp);
+app.use("/fp70",fp70);
 // app.use("/products",products);
 
 

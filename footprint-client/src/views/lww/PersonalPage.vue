@@ -119,7 +119,7 @@ export default {
 
 <style>
 .per-page .el-menu-vertical-demo.el-menu {
-  min-height: 450px;
+  min-height: 550px;
   margin-top: 50px;
   border: none;
 }

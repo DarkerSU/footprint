@@ -10,7 +10,7 @@
           <personalpage @getselect="getselect"></personalpage>
         </el-aside>
         <el-main class="footprint-user">
-          <!-- <personalbody></personalbody> -->
+          <perdefault v-if="isRperdefault"></perdefault>
           <router-view v-if="isRouterAlive"></router-view>
         </el-main>
       </el-container>
@@ -23,33 +23,35 @@
 import Myheader from "../components/sfq/Myheader";
 import PersonalHeader from "./zxm/PersonalHeader";
 import PersonalPage from "../views/lww/PersonalPage";
+import PerDefault from "../views/sxp/PerDefault";
 // import PersonalBody from './sxp/PersonalBody'
 import Myfooter from "./zxm/Myfooter";
 export default {
-  provide(){
-    return{
-      reload:this.reload
-    }
+  provide() {
+    return {
+      reload: this.reload
+    };
   },
   data() {
     return {
       selectM: 0,
-      isRouterAlive:true,
+      isRouterAlive: false,
+      isRperdefault: true
     };
   },
   components: {
     myheader: Myheader,
     personalheader: PersonalHeader,
     myfooter: Myfooter,
-    personalpage: PersonalPage
-    // personalbody:PersonalBody
+    personalpage: PersonalPage,
+    perdefault: PerDefault
   },
   methods: {
-    reload(){
-      this.isRouterAlive=false;
-      this.$nextTick(()=>{
-        this.isRouterAlive=true;
-      })
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(() => {
+        this.isRouterAlive = true;
+      });
     },
     // 用于接收子组件传来的值
     getselect(i) {
@@ -59,9 +61,9 @@ export default {
     },
     // body页面内容路由跳转函数
     getHome() {
-      var userinfo=JSON.parse(sessionStorage.getItem("UserInfo"));
-      var unum=userinfo.unum;
-      console.log(unum)
+      var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
+      var unum = userinfo.unum;
+      console.log(unum);
       // if(unum){
 
       // }
@@ -69,30 +71,46 @@ export default {
       switch (this.selectM) {
         case 1.1:
           this.$router.push("/addfootprint");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
           break;
         case 1.2:
           this.$router.push("/showfootprint");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
           break;
         case 3.1:
           this.$router.push("/footprintTheme");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
           break;
         case 4.1:
           this.$router.push("/user");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
           break;
         case 4.2:
           this.$router.push("/userManagement");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
           break;
         case 5.1:
           this.$router.push("/userinfoupdate");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
           break;
         case 5.2:
           this.$router.push("/updatepwd");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
           break;
         // case 7.2:
         //   this.$router.push("/updatepwd");
         //   break;
         default:
-          // this.$router.push("/Module1");
+          this.$router.push("/perdefault");
+          this.isRouterAlive = false;
+          this.isRperdefault = true;
           break;
       }
     }

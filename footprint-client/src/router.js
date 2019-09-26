@@ -11,6 +11,7 @@ import UpdateUserInfo from './views/sxp/UpdateUserInfo.vue'
 import FootprintTheme from './views/sxp/FootprintTheme'
 import Tablee from './views/sfq/Tablee'
 import UserManagement from './views/sfq/UserManagement'
+
 // import Test1 from './views/sxp/Test1.vue';
 Vue.use(Router)
 
