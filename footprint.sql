@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2019-09-23 12:04:32
+-- 生成日期： 2019-09-26 06:34:22
 -- 服务器版本： 10.3.16-MariaDB
 -- PHP 版本： 7.1.30
 
@@ -441,6 +441,56 @@ INSERT INTO `city` (`cid`, `pid`, `cityname`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `footprint_sign`
+--
+
+CREATE TABLE `footprint_sign` (
+  `spid` int(100) NOT NULL COMMENT '足迹内容id',
+  `spnum` int(30) NOT NULL COMMENT '足迹编号，和footprint表的psign同步',
+  `spsite` char(200) NOT NULL COMMENT '足迹地点',
+  `spcountry` char(50) NOT NULL COMMENT '足迹地区',
+  `spfpdate` date NOT NULL COMMENT '足迹日期',
+  `spimgUrl` varchar(500) NOT NULL COMMENT '足迹的图片地址',
+  `sptextarea` varchar(300) NOT NULL COMMENT '足迹寄语',
+  `sptagList` char(100) NOT NULL COMMENT '足迹标签'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `footprint_sign`
+--
+
+INSERT INTO `footprint_sign` (`spid`, `spnum`, `spsite`, `spcountry`, `spfpdate`, `spimgUrl`, `sptextarea`, `sptagList`) VALUES
+(1, 1, '北京市东城区西长安街天安门-前石狮子', '北京市', '2019-09-24', '[\"img/1569472036936-2452.jpeg\",\"img/1569472044199-73.jpeg\"]', '一片花瓣，随着风\n似蝴蝶般，翩然而来\n落进室内，俯身拾起花瓣，\n想起自己如同迷途的羔羊，\n找寻不到心灵的归宿，却总是被风雨阻挡。\n这花瓣也如同我吗？忘了归途，还是伴着风浪迹天涯', '[\"革命盛地\",\"旅行\"]'),
+(2, 1, '北京市丰台区金泰彤翔写字楼-A座', '北京市', '2019-09-25', '[\"img/1569472176489-9377.jpg\",\"img/1569472193849-963.jpg\"]', '真正的君子有傲骨却无傲气，有傲气就会骄人，无傲骨就会媚人。不娇不媚，才是真正的大丈夫。什么是大丈夫?孟子说“富贵不能淫，贫贱不能移，威武不能屈，此之谓大丈夫!”如何能成为大丈夫?孟子说“养浩然之气。”', '[\"古镇\",\"山水\",\"沿途美食\"]'),
+(3, 2, '北京市东城区西长安街天安门-前石狮子', '北京市', '2019-09-24', '[\"img/1569472036936-2452.jpeg\",\"img/1569472044199-73.jpeg\"]', '一片花瓣，随着风\n似蝴蝶般，翩然而来\n落进室内，俯身拾起花瓣，\n想起自己如同迷途的羔羊，\n找寻不到心灵的归宿，却总是被风雨阻挡。\n这花瓣也如同我吗？忘了归途，还是伴着风浪迹天涯', '[\"革命盛地\",\"旅行\"]'),
+(4, 2, '北京市丰台区金泰彤翔写字楼-A座', '北京市', '2019-09-25', '[\"img/1569472176489-9377.jpg\",\"img/1569472193849-963.jpg\"]', '真正的君子有傲骨却无傲气，有傲气就会骄人，无傲骨就会媚人。不娇不媚，才是真正的大丈夫。什么是大丈夫?孟子说“富贵不能淫，贫贱不能移，威武不能屈，此之谓大丈夫!”如何能成为大丈夫?孟子说“养浩然之气。”', '[\"古镇\",\"山水\",\"沿途美食\"]'),
+(5, 1, '北京市东城区西长安街天安门-前石狮子', '北京市', '2019-09-24', '[\"img/1569472036936-2452.jpeg\",\"img/1569472044199-73.jpeg\"]', '一片花瓣，随着风\n似蝴蝶般，翩然而来\n落进室内，俯身拾起花瓣，\n想起自己如同迷途的羔羊，\n找寻不到心灵的归宿，却总是被风雨阻挡。\n这花瓣也如同我吗？忘了归途，还是伴着风浪迹天涯', '[\"革命盛地\",\"旅行\"]');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `publish_footprint`
+--
+
+CREATE TABLE `publish_footprint` (
+  `pid` int(11) NOT NULL COMMENT '发表足迹id',
+  `ptitle` char(30) NOT NULL COMMENT '足迹名称',
+  `praise` int(100) NOT NULL DEFAULT 0 COMMENT '足迹点赞数',
+  `psign` int(10) DEFAULT NULL COMMENT '足迹对应的标号，和足迹内容表的snum一致',
+  `unum` char(20) NOT NULL COMMENT '用户账号'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `publish_footprint`
+--
+
+INSERT INTO `publish_footprint` (`pid`, `ptitle`, `praise`, `psign`, `unum`) VALUES
+(1, '法海你不懂爱', 0, NULL, 'sxp'),
+(2, '唐僧的爱情', 0, NULL, 'sxp');
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `role`
 --
 
@@ -518,7 +568,7 @@ INSERT INTO `user` (`uid`, `unum`, `uname`, `upwd`, `ugender`, `uphone`, `uEmail
 (1, 'zxm', '朱雪梅', 'cc4b5438803d71cfb5360653a1f70352', 0, '123123123', '1238612', 2, 2, 1, '1231231212', '123456789765432345'),
 (2, 'sfq', '孙复棋', '935e5508d5a6b59b819a7f0dada27eb6', 1, '11', '11', 1, 1, 11, '', '11'),
 (3, 'lww', '陆伟伟', 'f15f46e1607e89304b9f9115492bd947', 1, '13312345678', 'lww111@163.com', 2, 2, 112, '', '修改信息'),
-(4, 'sxp', '苏晓鹏', '2153a452ad28d2466892ec78fc09dbf5', 1, '121212', '12212', 2, 2, 0, NULL, '1'),
+(4, 'sxp', '苏晓鹏', '2153a452ad28d2466892ec78fc09dbf5', 1, '13607002103', '1233@qq.com', 2, 2, 0, 'img/1569471547461-2903.jpg', 'woshidalao'),
 (5, 'admin', '高级管理员', '0192023a7bbd73250516f069df18b500', NULL, '13567825627', '1369866743@163.com', 0, 0, 120, NULL, NULL),
 (6, 'ss', 'peng', 'e10adc3949ba59abbe56e057f20f883e', 0, '111111', '111', 1, 1, 0, '', '额外翁认为'),
 (14, '13607002109', 'nbb', 'sxp123456', 0, '', '', 1, 1, 0, '', '');
@@ -532,6 +582,20 @@ INSERT INTO `user` (`uid`, `unum`, `uname`, `upwd`, `ugender`, `uphone`, `uEmail
 --
 ALTER TABLE `city`
   ADD PRIMARY KEY (`cid`);
+
+--
+-- 表的索引 `footprint_sign`
+--
+ALTER TABLE `footprint_sign`
+  ADD PRIMARY KEY (`spid`);
+
+--
+-- 表的索引 `publish_footprint`
+--
+ALTER TABLE `publish_footprint`
+  ADD PRIMARY KEY (`pid`),
+  ADD UNIQUE KEY `pid` (`pid`),
+  ADD UNIQUE KEY `psign` (`psign`);
 
 --
 -- 表的索引 `role`
@@ -550,11 +614,24 @@ ALTER TABLE `tag`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `unum` (`unum`),
   ADD KEY `rnum` (`rnum`);
 
 --
 -- 在导出的表使用AUTO_INCREMENT
 --
+
+--
+-- 使用表AUTO_INCREMENT `footprint_sign`
+--
+ALTER TABLE `footprint_sign`
+  MODIFY `spid` int(100) NOT NULL AUTO_INCREMENT COMMENT '足迹内容id', AUTO_INCREMENT=6;
+
+--
+-- 使用表AUTO_INCREMENT `publish_footprint`
+--
+ALTER TABLE `publish_footprint`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT COMMENT '发表足迹id', AUTO_INCREMENT=3;
 
 --
 -- 使用表AUTO_INCREMENT `role`
