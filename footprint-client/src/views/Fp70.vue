@@ -7,26 +7,44 @@
     <!-- 主要内容容器 -->
     <div class="c-main">
       <!-- 时间线容器 -->
-      <div class="time-line" v-for="item in 6" :key="item">
-        <div class="time-line-div">
-          <div data--20-bottom-top="opacity:0;transform: scale(0.5); transition: all 0.5s;"
-            data--50-bottom-bottom="opacity:1;transform: scale(1);">1991.2.2</div>
-          <div ref="circular"></div>
-          <div>1668.9.9</div>
-        </div>
-        <div class="img-dotted" ref="dotted"></div>
+      <!--获取偶数下标数据加载-->
+      <div class="time-line" v-for="(item,index) of sevendata" :key="index" v-if="index%2 === 0">
+        <div class="time-line">
+          <!-- 左侧内容 -->
+          <div class="time-line-div">
+            <div data--20-bottom-top="opacity:0;transform: scale(0.5); transition: all 0.5s;"
+              data--50-bottom-bottom="opacity:1;transform: scale(1);">
+              <div class="time-line-pic">
+                <img :src="imgURL+item.chimg">
+              </div>
+              <div class="time-content">
+                {{item.chtext}}
+              </div>
+            </div>
+            <div ref="circular"></div>
+            <div>{{item.chdate}}</div>
+          </div>
+          <div class="img-dotted" ref="dotted"></div>
 
-        <div class="time-line-div-right">
-          <div data--20-bottom-top="opacity:0;transform: scale(0.5); transition: all 0.5s;"
-            data--50-bottom-bottom="opacity:1;transform: scale(1);">1991.2.2</div>
-          <div ref="circular"></div>
-          <div>1668.9.9</div>
+          <!-- 右侧内容 获取奇数下标数据加载-->
+          <div class="time-line-div-right" v-if="sevendata[index + 1] != undefined">
+            <div data--20-bottom-top="opacity:0;transform: scale(0.5); transition: all 0.5s;"
+              data--50-bottom-bottom="opacity:1;transform: scale(1);">
+              <div class="time-line-pic">
+                <img :src="imgURL+sevendata[index+1].chimg">
+              </div>
+              <div class="time-content">
+                {{sevendata[index+1].chtext}}
+              </div>
+            </div>
+            <div ref="circular"></div>
+            <div>{{sevendata[index+1].chdate}}</div>
+          </div>
         </div>
-        <div class="img-dotted-right" ref="dotted"></div>
       </div>
+      <!-- 尾部 -->
+      <div class="c-footer"></div>
     </div>
-    <!-- 尾部 -->
-    <div class="c-footer"></div>
   </div>
 </template>
 
@@ -37,29 +55,54 @@
   export default {
     data() {
       return {
+        sevendata: [],
       }
     },
-    methods: {},
+    methods: {
+      getsevendata() {
+        this.axios.get("/fp70").then(res => {
+          // this.sevendata = res.data.data
+          // console.log(res.data)
+          // console.log(res.data.data)
+          // console.log(this.sevendata)
+          // 日期解析
+          for (var i = 0; i < res.data.data.length; i++) {
+            res.data.data[i].chdate =  this.$moment(res.data.data[i].chdate).format("YYYY-MM-DD");
+            // console.log(res.data.data[i].chdate);
+            // this.sevendata.push(res.data.data[i].chdate)
+            // console.log(this.sevendata)
+          }
+          this.sevendata = res.data.data
+        })
+      },
+    },
     computed: {},
-    created() {},
+    created() {
+      this.getsevendata()
+    },
+
+    //事件监听
     mounted() {
-      // window.addEventListener('load', function () { //bug 第一次进入页面不执行skrollr.init() 需要刷新后才执行skrollr.init() 控制台报错
-      //   console.log('window load')
+      // this.$nextTick(() => {
       //   skrollr.init({
       //     smoothScrolling: false
       //   });
       // })
-      // console.log("mounted")
-      this.$nextTick(()=>{
+      // Load事件在所有文件从所有资源(包括ADS和图像)加载完毕时触发。
+      window.addEventListener('load', function () {
+        console.log('window load')
         skrollr.init({
-           smoothScrolling: false
-         });
+          smoothScrolling: false
+        });
       })
+      console.log('mountend')
     },
-    beforeDestroy() {
-      let instance = skrollr.get()
-      instance.destroy()
-    }
+
+    //销毁
+    // beforeDestroy() {
+    //   let instance = skrollr.get()
+    //   instance.destroy()
+    // }
   };
 </script>
 
@@ -163,6 +206,31 @@
     background-color: #fff481;
   }
 
+  .time-line-pic {
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+    border-radius: 6px;
+    /* margin-bottom: 10px; */
+  }
+
+  .time-line-pic img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .time-content {
+    width: 100%;
+    height: 20%;
+    font-size: 15px;
+    font-weight: 900;
+    color: aliceblue;
+    text-indent: 0.8cm;
+    padding: 5px;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+  }
+
   /* 右侧 */
   .time-line-div-right {
     position: relative;
@@ -215,16 +283,6 @@
     color: #2f0300;
     border-radius: 10px;
   }
-
-  /* .img-dotted-right {
-  position: absolute;
-  width: 2px;
-  height: 220px;
-  top: 365px;
-  left: 684px;
-  z-index: 1;
-  background-color: #fff481;
-} */
 
   /* 尾部 */
   .china-70 .c-footer {
