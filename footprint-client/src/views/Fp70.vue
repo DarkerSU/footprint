@@ -114,6 +114,7 @@
     background-image: url("../../src/assets/img/LuWeiWei/c1.png");
     background-repeat: no-repeat;
     background-position: center center;
+    background-size: 100% 100%;
     min-width: 1366px;
   }
 
@@ -124,6 +125,7 @@
     background-image: url("../../src/assets/img/LuWeiWei/c2.png");
     background-repeat: no-repeat;
     background-position: center center;
+    background-size: 100% 101%;
     min-width: 1366px;
   }
 
@@ -167,11 +169,11 @@
   .time-line-div>div:nth-child(1)::before {
     content: "";
     position: absolute;
-    right: -10px;
-    top: 20px;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid #fdf47d;
+    right: -60px;
+    top: 13px;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 57px solid #fdf47d;
   }
 
   .time-line-div>div:nth-child(2) {
@@ -187,7 +189,7 @@
 
   .time-line-div>div:nth-child(3) {
     position: absolute;
-    left: 720px;
+    left: 698px;
     top: 65px;
     padding: 10px;
     background: #f1bd67;
@@ -255,11 +257,11 @@
   .time-line-div-right>div:nth-child(1)::before {
     content: "";
     position: absolute;
-    top: 20px;
-    left: -10px;
-    border-bottom: 10px solid transparent;
-    border-top: 10px solid transparent;
-    border-right: 10px solid #fdf47d;
+    top: 13px;
+    left: -60px;
+    border-bottom: 15px solid transparent;
+    border-top: 15px solid transparent;
+    border-right: 57px solid #fdf47d;
   }
 
   .time-line-div-right>div:nth-child(2) {
@@ -275,7 +277,7 @@
 
   .time-line-div-right>div:nth-child(3) {
     position: absolute;
-    left: 580px;
+    left: 572px;
     top: 65px;
     padding: 10px;
     background: #f1bd67;
@@ -291,5 +293,6 @@
     background-image: url("../../src/assets/img/LuWeiWei/c3.jpg");
     background-repeat: no-repeat;
     background-position: center center;
+    background-size: 100% 100%;
   }
 </style>
