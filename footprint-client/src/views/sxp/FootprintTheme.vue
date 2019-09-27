@@ -83,7 +83,7 @@ export default {
 }
 .fptheme .fptheme2 {
   float: left;
-  background-color: #d60a16;
+  background: -webkit-linear-gradient(bottom,rgb(155, 52, 52),rgb(218, 28, 22))
 }
 .fptheme .fptheme3 {
   float: left;

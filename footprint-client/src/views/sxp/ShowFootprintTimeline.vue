@@ -298,6 +298,7 @@ export default {
   font-weight: bold;
 }
 .show-footprint-body .showtext .textarea {
+  text-indent: 1cm;
   font: 20px "楷体";
   line-height: 30px;
   margin: 5px;

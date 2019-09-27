@@ -300,8 +300,11 @@ export default {
           spimgUrl: this.fpImgUpload
         };
         var datainfo = {
+          uname:userinfo.uname,
           unum: userinfo.unum,
-          ptitle: this.ptitle
+          ptitle: this.ptitle,
+          firstfpimgurl:this.fpImgUpload[0],
+          firstfptagList:this.tagList[0]
         };
         this.$confirm("提交成功后将不能修改, 是否继续?", "提示", {
           confirmButtonText: "确定",

@@ -12,12 +12,13 @@ router.use(session({
 router.post("/addfp", (req, res) => {
     console.log("插入足迹一条.............")
     var obj = req.body;
-    console.log(obj)
+    // console.log(obj)
     var ptitle = obj.ptitle;
     var unum = obj.unum;
-    var sql1 = `insert into publish_footprint (ptitle,unum) values (?,?);`;
-    pool.query(sql1, [ptitle, unum], (err, result) => {
-        console.log(result.insertId);
+    var uname = obj.uname;
+    var sql1 = `insert into publish_footprint set ?;`;
+    pool.query(sql1, [obj], (err, result) => {
+        // console.log(result.insertId);
         if (result.affectedRows > 0) {
             console.log("足迹标题插入成功！！！！！！！！！！！")
             res.send({ code: 1, msg: "足迹插入成功", data: result.insertId })
@@ -30,7 +31,7 @@ router.post("/addfp", (req, res) => {
 router.get("/addContent", (req, res) => {
     console.log("插入足迹一条.............")
     var obj = req.query;
-    console.log(obj)
+    // console.log(obj)
     var sql1 = `insert into footprint_sign set ?`;
     pool.query(sql1, [obj], (err, result) => {
         // console.log(result.insertId);
@@ -54,7 +55,7 @@ router.get("/showfootprint", (req, res) => {
             var sql2 = `select spsite,spcountry,spimgUrl,spfpdate,sptextarea,sptagList from footprint_sign where spnum=?`;
             pool.query(sql2, [spnum], (err, result2) => {
                 // if(err)
-                console.log(result2)
+                // console.log(result2)
                 if (result2.length > 0) {
                     console.log('足迹查询成功')
                     res.send({ code: 1, mag: '足迹查询成功', data1: result2, data2: result1 });
@@ -80,7 +81,7 @@ router.get("/unumAllshow", (req, res) => {
         // console.log(result1);
         if (result1.length > 0) {
             console.log('足迹查询成功')
-            res.send({ code: 1, mag: '足迹查询成功', data1: result1});
+            res.send({ code: 1, mag: '足迹查询成功', data1: result1 });
         } else {
             console.log('足迹查询失败');
             res.send({ code: -1, mag: '足迹查询失败' });
@@ -88,6 +89,43 @@ router.get("/unumAllshow", (req, res) => {
         // })
     })
 })
+
+router.get("/pageAllshow", (req, res) => {
+    var pno = parseInt(req.query.pno);
+    var count = parseInt(req.query.count);
+    console.log(count)
+    if (pno <= 0) {
+        pno = 1;
+    }
+    
+    var sql = `select pid,unum,uname,ptitle,firstfpimgurl,firstfptagList from publish_footprint limit ?,?`;
+    start = (pno - 1) * count;
+    pool.query(sql, [start, count], (err, result1) => {
+        // console.log(result1);
+        if (result1.length > 0) {
+            res.send({ code: 1, mag: '足迹查询成功',data1:result1})
+        } else {
+            res.send({ code: -1, mag: '足迹查询失败' });
+        }
+       
+    })
+})
+
+ // for (var i = 0; i < result1.length; i++) {
+            //     var spnum = result1[i].pid;
+            //     var sql1 = "select spimgUrl,sptagList from footprint_sign where spnum=? "
+            //     pool.query(sql1, [spnum], (err, result2) => {
+            //         console.log(result2);
+            //         if (result2.length > 0) {
+            //             console.log('足迹查询成功')
+            //             res.send({ code: 1, mag: '足迹查询成功',data1:result1,data2:result2});
+            //         } else {
+            //             console.log('足迹查询失败');
+            //             res.send({ code: -1, mag: '足迹查询失败' });
+            //         }
+            //     })
+            // }
+
 // router.get("/pidshowfp",(req,res)=>{
 //     var spnum=req.query.spnum;
 //     var sql1 = `select spimgUrl,sptagList from footprint_sign where spnum=?`
