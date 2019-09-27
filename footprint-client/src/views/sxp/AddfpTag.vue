@@ -97,14 +97,14 @@ export default {
         })
         .then(res => {
           if (res.data.code == 1) {
-            console.log("查询标签成功");
+            // console.log("查询标签成功");
             this.tagList = res.data.data;
           } else {
-            console.log("查询标签失败");
+            // console.log("查询标签失败");
           }
         });
         var taginfo=this.$store.getters.getfpTag;
-        console.log(taginfo)
+        // console.log(taginfo)
     }
   },
   created() {

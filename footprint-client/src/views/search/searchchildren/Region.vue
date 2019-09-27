@@ -33,12 +33,12 @@ export default {
   methods: {
     // 用于子组件给父组件传值
     handleselect(cityname) {
-      console.log(`要给home组件的值：${cityname}`);
+      // console.log(`要给home组件的值：${cityname}`);
       this.$emit("getselect", cityname);
     },
     // 查询某个省份的市级单位
     searchCounty(cid) {
-      console.log(cid);
+      // console.log(cid);
       this.axios
         .get("/search/city", {
           params: {
@@ -46,13 +46,13 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.data.code == 1) {
-            console.log("查询成功");
+            // console.log("查询成功");
             this.citylist = res.data.data;
-            console.log(this.citylist);
+            // console.log(this.citylist);
           } else {
-            console.log("查询失败");
+            // console.log("查询失败");
           }
         });
     },
@@ -65,10 +65,10 @@ export default {
         })
         .then(res => {
           if (res.data.code == 1) {
-            console.log("查询成功");
+            // console.log("查询成功");
             this.capitalList = res.data.data;
           } else {
-            console.log("查询失败");
+            // console.log("查询失败");
           }
         });
     }

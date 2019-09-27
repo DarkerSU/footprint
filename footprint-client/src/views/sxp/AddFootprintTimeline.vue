@@ -273,13 +273,7 @@ export default {
     },
     subfootprint() {
       var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
-      // console.log(userinfo.unum);
-      // console.log(this.ptitle);
-      // console.log(this.country);
-      // console.log(this.site);
-      // console.log(this.fpdate);
-      // console.log(this.tagList);
-      // console.log(this.textarea);
+      // 获取页面数据
       var data = {
         spcountry: this.country,
         spsite: this.site,

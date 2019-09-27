@@ -1,6 +1,5 @@
 <template>
   <div class="perdefault">
-      <!-- <h1>欢迎来到足迹网</h1> -->
   </div>
 </template>
 

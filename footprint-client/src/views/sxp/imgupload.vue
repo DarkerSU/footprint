@@ -20,12 +20,12 @@ export default {
     //   return false;
     // },
     uploadAvatar(avatar) {
-      console.log(avatar.target.files[0]);
+      // console.log(avatar.target.files[0]);
       let file = avatar.target.files[0];
       let data = new FormData();
       data.append("file", file, file.name); //很重要 data.append("file", file);不成功
       data.append("data", 112); //向后台传递数据
-      console.log(data.get("file"));
+      // console.log(data.get("file"));
       this.axios.post("/img/file", data, {
         headers: { "content-type": "multipart/form-data" }
       });
@@ -35,7 +35,7 @@ export default {
       return false;
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;

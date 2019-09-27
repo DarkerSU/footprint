@@ -117,5 +117,6 @@ export default {
   width: 30px;
   height: 30px;
   vertical-align: middle;
+  padding-right:10px ;
 }
 </style>

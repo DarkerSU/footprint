@@ -11,6 +11,8 @@ import UpdateUserInfo from './views/sxp/UpdateUserInfo.vue'
 import FootprintTheme from './views/sxp/FootprintTheme'
 import Tablee from './views/sfq/Tablee'
 import UserManagement from './views/sfq/UserManagement'
+import Showblockfootprint from './views/sxp/Showblockfootprint'
+import Forgetupwd from './views/zxm/Forgetupwd'
 
 // import Test1 from './views/sxp/Test1.vue';
 Vue.use(Router)
@@ -23,6 +25,17 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/showfpTimeline',
+      name: 'showfpTimeline',
+      component: ShowFootprintTimeline,
+    },
+    
+    {
+      path: '/forgetpwd',
+      name: 'forgetpwd',
+      component: Forgetupwd,
+    },
+    {
       path: '/personal',
       name: 'personal',
       component: Personal,
@@ -33,9 +46,9 @@ export default new Router({
           component: AddFootprintTimeline,
         },
         {
-          path: '/showfootprint',
-          name: 'showfootprint',
-          component: ShowFootprintTimeline,
+          path: '/showblockfootprint',
+          name: 'showblockfootprint',
+          component: Showblockfootprint,
         },
         {
           path: '/footprintTheme',

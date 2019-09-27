@@ -34,14 +34,69 @@ router.get("/addContent", (req, res) => {
     var sql1 = `insert into footprint_sign set ?`;
     pool.query(sql1, [obj], (err, result) => {
         // console.log(result.insertId);
-        if(result.affectedRows>0){
+        if (result.affectedRows > 0) {
             console.log(`足迹内容插入成功！！！！！！！！`)
-        }else{
+        } else {
             console.log(`足迹内容插入失败！！！！！！！！`)
         }
     })
 });
+// 根据标题查询
+router.get("/showfootprint", (req, res) => {
+    console.log("查询足迹........");
+    var ptitle = req.query.fptitle;
+    // console.log(ptitle)
+    var sql = `select pid,ptitle,praise,unum from publish_footprint where ptitle=?`
+    pool.query(sql, [ptitle], (err, result1) => {
+        // console.log(result1[0].pid)
+        if (result1.length > 0) {
+            var spnum = result1[0].pid;
+            var sql2 = `select spsite,spcountry,spimgUrl,spfpdate,sptextarea,sptagList from footprint_sign where spnum=?`;
+            pool.query(sql2, [spnum], (err, result2) => {
+                // if(err)
+                if (result2.length > 0) {
+                    console.log('足迹查询成功')
+                    res.send({ code: 1, mag: '足迹查询成功', data1: result2, data2: result1 });
+                } else {
+                    console.log('足迹查询失败');
+                    res.send({ code: -1, mag: '足迹查询失败' });
+                }
+            })
+        } else {
+            console.log('足迹查询失败');
+            res.send({ code: -1, mag: '足迹查询失败' });
+        }
 
+    })
+})
+
+router.get("/unumAllshow", (req, res) => {
+    console.log("查询足迹........");
+    var unum = req.query.unum;
+    console.log(unum)
+    var sql = `select pid,ptitle,praise from publish_footprint where unum=?`
+    pool.query(sql, [unum], (err, result1) => {
+
+        console.log(result1);
+        if (result1.length > 0) {
+            var spnum = result1[0].pid;
+            console.log('足迹查询成功')
+            var sql1 = `select spimgUrl,sptagList from footprint_sign where spnum=?`
+            pool.query(sql1, [spnum], (err, result2) => {
+                console.log(result2)
+                if (result2.length > 0) {
+                    res.send({ code: 1, mag: '足迹查询成功', data1: result1, data2: result2 });
+                } else {
+                    res.send({ code: -1, mag: '足迹查询失败' });
+                }
+            })
+        } else {
+            console.log('足迹查询失败');
+            res.send({ code: -1, mag: '足迹查询失败' });
+        }
+        // })
+    })
+})
 // 分页查询数据
 // router.get("/page", (req, res) => {
 //     console.log("执行分页查询获取用户................")

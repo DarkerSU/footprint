@@ -55,7 +55,7 @@ export default {
     },
     // 用于接收子组件传来的值
     getselect(i) {
-      console.log(`孩子给的:${i}`);
+      // console.log(`孩子给的:${i}`);
       this.selectM = i;
       // console.log(this.selectM);
     },
@@ -63,11 +63,6 @@ export default {
     getHome() {
       var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
       var unum = userinfo.unum;
-      console.log(unum);
-      // if(unum){
-
-      // }
-      console.log(this.selectM);
       switch (this.selectM) {
         case 1.1:
           this.$router.push("/addfootprint");
@@ -75,7 +70,17 @@ export default {
           this.isRperdefault = false;
           break;
         case 1.2:
-          this.$router.push("/showfootprint");
+          this.$router.push("/showblockfootprint");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
+          break;
+        case 2.1:
+          this.$router.push("/");
+          this.isRouterAlive = true;
+          this.isRperdefault = false;
+          break;
+        case 2.2:
+          this.$router.push("/");
           this.isRouterAlive = true;
           this.isRperdefault = false;
           break;
@@ -104,9 +109,6 @@ export default {
           this.isRouterAlive = true;
           this.isRperdefault = false;
           break;
-        // case 7.2:
-        //   this.$router.push("/updatepwd");
-        //   break;
         default:
           this.$router.push("/perdefault");
           this.isRouterAlive = false;
@@ -117,9 +119,8 @@ export default {
   },
   watch: {
     selectM: function(newVal, oldVal) {
-      // console.log(newVal, oldVal);
       this.selectM = newVal;
-      // console.log(this.selectM);
+
       this.getHome();
     }
   },
