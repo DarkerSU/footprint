@@ -170,11 +170,11 @@ export default {
     },
     // 删除用户
     handleDelete(row) {
-      console.log(JSON.parse(sessionStorage.getItem("UserInfo")));
-      console.log(row)
+      // console.log(JSON.parse(sessionStorage.getItem("UserInfo")));
+      // console.log(row)
       var sessionInfo = JSON.parse(sessionStorage.getItem("UserInfo"));
       if (sessionInfo.urole == 2) {
-        if (sessionInfo.urole == row.urole) {
+        if (row.urole>=sessionInfo.urole ) {
           this.$alert(
             "您暂时没有对此用户的操作权限，请联系高级管理员",
             "警告",
