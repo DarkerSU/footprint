@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Personal from './views/Personal.vue'
+import Fp70 from './views/Fp70.vue'
 import AddFootprintTimeline from './views/sxp/AddFootprintTimeline.vue'
 import ShowFootprintTimeline from './views/sxp/ShowFootprintTimeline.vue'
 import Imgupload from './views/sxp/imgupload.vue'
@@ -34,6 +35,9 @@ export default new Router({
       path: '/forgetpwd',
       name: 'forgetpwd',
       component: Forgetupwd,
+      path:'/fp70',
+      name:'fp70',
+      component: Fp70,
     },
     {
       path: '/personal',
