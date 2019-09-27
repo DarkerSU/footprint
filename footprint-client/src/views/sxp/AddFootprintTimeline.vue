@@ -273,73 +273,94 @@ export default {
     },
     subfootprint() {
       var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
-      // 获取页面数据
-      var data = {
-        spcountry: this.country,
-        spsite: this.site,
-        spfpdate: this.fpdate,
-        sptagList: this.tagList,
-        sptextarea: this.textarea,
-        spimgUrl: this.fpImgUpload
-      };
-      var datainfo = {
-        unum: userinfo.unum,
-        ptitle: this.ptitle
-      };
-      this.$confirm("提交成功后将不能修改, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-        center: true
-      })
-        .then(() => {
-          this.axios
-            .post("/fp/addfp", this.qs.stringify(datainfo))
-            .then(res => {
-              console.log(res.data.data);
-              data.spnum = res.data.data;
-              console.log(data);
-              for (var i = 0; i < data.spsite.length; i++) {
-                this.axios
-                  .get("/fp/addContent", {
-                    params: {
-                      spnum: data.spnum,
-                      spsite: data.spsite[i],
-                      spcountry: data.spcountry[i],
-                      spfpdate: data.spfpdate[i],
-                      sptagList: JSON.stringify(data.sptagList[i]),
-                      sptextarea: data.sptextarea[i],
-                      spimgUrl: JSON.stringify(data.spimgUrl[i])
-                    }
-                  })
-                  .then(res1 => {
-                    if (res1.data.code == 1) {
-                      console.log("足迹内容插入成功");
-                      this.country = [];
-                      this.site = [];
-                      this.fpdate = [];
-                      this.tagList = [];
-                      this.textarea = [];
-                      this.fpImgUpload = [];
-                      this.$message({
-                        type: "success",
-                        message: "新增足迹成功!"
-                      });
-                      return;
-                    }
-                  });
-              }
-            })
-            .catch(err => {
-              this.$message.error("新增足迹失败!");
-            });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消提交"
-          });
+      if(this.site.length<2){
+        this.$message({
+          message: "至少两条足迹才可以发布",
+          type: "warning"
         });
+      }else{
+         if (!this.ptitle) {
+        this.$message({
+          message: "标题不能为空",
+          type: "warning"
+        });
+      } else if (!this.site) {
+        this.$message({
+          message: "您还未选择你的足迹地点",
+          type: "warning"
+        });
+      } else {
+        // 获取页面数据
+        var data = {
+          spcountry: this.country,
+          spsite: this.site,
+          spfpdate: this.fpdate,
+          sptagList: this.tagList,
+          sptextarea: this.textarea,
+          spimgUrl: this.fpImgUpload
+        };
+        var datainfo = {
+          unum: userinfo.unum,
+          ptitle: this.ptitle
+        };
+        this.$confirm("提交成功后将不能修改, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true
+        })
+          .then(() => {
+            this.axios
+              .post("/fp/addfp", this.qs.stringify(datainfo))
+              .then(res => {
+                console.log(res.data.data);
+                data.spnum = res.data.data;
+                console.log(data);
+                for (var i = 0; i < data.spsite.length; i++) {
+                  this.axios
+                    .get("/fp/addContent", {
+                      params: {
+                        spnum: data.spnum,
+                        spsite: data.spsite[i],
+                        spcountry: data.spcountry[i],
+                        spfpdate: data.spfpdate[i],
+                        sptagList: JSON.stringify(data.sptagList[i]),
+                        sptextarea: data.sptextarea[i],
+                        spimgUrl: JSON.stringify(data.spimgUrl[i])
+                      }
+                    })
+                    .then(res1 => {
+                      if (res1.data.code == 1) {
+                        console.log("足迹内容插入成功");
+                        this.country.length = 0;
+                        this.site.length = 0;
+                        this.fpdate.length = 0;
+                        this.tagList.length = 0;
+                        this.textarea.length = 0;
+                        this.fpImgUpload.length = 0;
+                        this.ptitle = "";
+                        this.$message({
+                          type: "success",
+                          message: "新增足迹成功!"
+                        });
+                        return;
+                      }
+                    });
+                }
+              })
+              .catch(err => {
+                this.$message.error("新增足迹失败!");
+              });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消提交"
+            });
+          });
+      }
+      }
+     
     }
   },
   watch: {

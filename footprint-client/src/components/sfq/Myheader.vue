@@ -28,7 +28,7 @@
                   <a href>行摄攻略</a>
                 </li>
                 <li>
-                  <a href>行摄最美中国</a>
+                  <a href>庆祝70华诞</a>
                 </li>
                 <li>
                   <a href>我的足迹</a>

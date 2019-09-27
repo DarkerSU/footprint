@@ -107,7 +107,7 @@ export default {
         })
         .then(res => {
           if (res.data.code == 1) {
-            // console.log(res.data);
+            console.log(res.data.data1);
             for (var i = 0; i < res.data.data1.length; i++) {
               //  将图片路径字符串解析为数组
               res.data.data1[i].spimgUrl = JSON.parse(
