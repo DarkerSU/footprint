@@ -28,7 +28,9 @@
                   <a href>行摄攻略</a>
                 </li>
                 <li @click="fp70">
-                  <span>庆祝70华诞</span>
+                  <el-tooltip class="item" effect="dark" content="前往70华诞主体页" placement="bottom">
+                    <span>庆祝70华诞</span>
+                  </el-tooltip>
                 </li>
                 <li>
                   <a href>我的足迹</a>
@@ -45,7 +47,7 @@
                   src="../../assets/img/sunfuqi/b39d74a95caae4e8b27fc020bb89d72.png"
                   alt
                 />
-              </div> -->
+              </div>-->
               <div class="headerR-text" v-if="!showname">
                 <el-button type="text" @click="dialogFormVisible = true">登录</el-button>
                 <el-button type="text" @click="dialogFormVisibleregister = true">注册</el-button>
@@ -264,12 +266,12 @@ export default {
     };
   },
   methods: {
-    fp70(){
-      this.$router.push("/fp70")
+    fp70() {
+      this.$router.push("/fp70");
     },
     /* 忘记密码 */
-    forgetpwd(){
-      this.$router.push('/forgetpwd')
+    forgetpwd() {
+      this.$router.push("/forgetpwd");
     },
     reset(done) {
       this.clear();
@@ -440,11 +442,16 @@ export default {
       var name1 = this.form2.unum1;
       if (!name1) {
         this.reg_unum1 = 1;
-      } else if (!uPattern.test(name1)) {
-        this.reg_unum1 = 0;
-      } else if (uPattern.test(name1)) {
+      } else {
         this.reg_unum1 = 2;
       }
+      // if (!name1) {
+      //
+      // } else if (!uPattern.test(name1)) {
+      //   this.reg_unum1 = 0;
+      // } else if (uPattern.test(name1)) {
+      //
+      // }
     },
     // 注册时密码失去焦点时
     bullm() {
@@ -515,7 +522,14 @@ export default {
   height: 60px;
   vertical-align: top;
 }
-
+.header .headerC .headerL img:hover {
+  transform: rotate(360deg);
+  transition: All 1s ease-in-out;
+}
+.header .headerC .headerL p:hover {
+  transform: rotateY(360deg);
+  transition: All 1s ease-in-out;
+}
 .header {
   width: 100%;
   height: 80px;
@@ -558,7 +572,7 @@ export default {
   display: inline-block;
   color: rgb(255, 0, 0);
 }
-.header .headerC .headerM ul li:hover{
+.header .headerC .headerM ul li:hover {
   transform: rotate(360deg);
   transition: All 0.5s ease-in-out;
 }
@@ -567,8 +581,8 @@ export default {
   color: #fff;
   text-decoration: none;
 }
-.header .headerC .headerM li span{
-  font-size:20px; 
+.header .headerC .headerM li span {
+  font-size: 20px;
 }
 
 .header .headerC .headerR {

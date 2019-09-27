@@ -35,7 +35,7 @@ export default {
     // 上传之前的函数，用于对文件做限制
     uploadbefore(file) {
       // 对文件大小格式等做限制
-      if (file.size > 120400) {
+      if (file.size > 1204000) {
         console.log("图片大小不得超过10M");
         this.$message.error("图片大小不得超过1M");
         return false;

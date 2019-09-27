@@ -5,7 +5,21 @@
     </div>
     <div class="des">
       <p class="user-uname">
-        <span class="id">ID：<span>{{userlist.uname}}</span></span>
+        <span class="id">
+          ID：
+          <span>{{userlist.uname}}</span>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            :content="userlist.urole==3?'您是高级管理员':userlist.urole==2?'您是管理员':userlist.urole==1?'您是VIP会员':'现在升级成为VIP'"
+            placement="top"
+          >
+            <img
+              :src="userlist.urole==3?require('../../assets/img/sxp/admin.png'):userlist.urole==2?require('../../assets/img/sxp/admin1.png'):userlist.urole==1?require('../../assets/img/sxp/VIP.png'):require('../../assets/img/sxp/noVIP.png')"
+              alt
+            />
+          </el-tooltip>
+        </span>
       </p>
       <ul class="header-des-ul">
         <li>
@@ -43,16 +57,18 @@ export default {
     return {
       userlist: {
         uname: "",
-        upic: ""
-      },
-    }
+        upic: "",
+        urole: 0
+      }
+    };
   },
   created() {
     var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
-    console.log(userinfo.uname)
-    this.userlist.uname=userinfo.uname;
-    this.userlist.upic=userinfo.upic;
-  },
+    console.log(userinfo.uname);
+    this.userlist.uname = userinfo.uname;
+    this.userlist.upic = userinfo.upic;
+    this.userlist.urole = userinfo.urole;
+  }
 };
 </script>
 
@@ -87,6 +103,12 @@ export default {
   margin: 20px 20px;
   padding-left: 30px;
 }
+.header-content .des .user-uname img {
+  width: 40px;
+  height: 40px;
+  vertical-align: -10px;
+  margin-left: 15px;
+}
 .header-content .des ul li {
   list-style: none;
   display: inline-block;
@@ -107,9 +129,9 @@ export default {
   font-size: 30px;
   font-weight: bolder;
 }
-.user-uname .id span{
-  color: -webkit-linear-gradient(left,rgb(236, 51, 51),rgb(9, 236, 160));
-  font: 30px "楷体" ;
+.user-uname .id span {
+  color: -webkit-linear-gradient(left, rgb(236, 51, 51), rgb(9, 236, 160));
+  font: 30px "楷体";
   font-weight: bold;
   padding: 5px 0;
 }
@@ -117,6 +139,6 @@ export default {
   width: 30px;
   height: 30px;
   vertical-align: middle;
-  padding-right:10px ;
+  padding-right: 10px;
 }
 </style>

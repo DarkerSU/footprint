@@ -46,7 +46,7 @@ router.get("/register", (req, res) => {
                 console.log("##################################");
                 console.log("开始用户数据注册................");
                 var obj = req.query;
-                var sql = `insert into user (unum,uname,upwd) values (?,?,?)`;
+                var sql = `insert into user (unum,uname,upwd) values (?,?,md5(?))`;
                 pool.query(sql, [obj.unum,obj.uname,obj.upwd,], (err, result) => {
                     if (err) throw err;
                     if (result.affectedRows > 0) {

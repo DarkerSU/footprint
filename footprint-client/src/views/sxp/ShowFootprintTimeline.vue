@@ -11,7 +11,7 @@
       <div class="show-footprint-title">
       <span class="subtitle">
         来自"
-        <span class="show-ftitle">{{fpInfoTitle.unum}}</span>"的足迹
+        <span class="show-ftitle">{{uname}}</span>"的足迹
       </span>
     </div>
     <el-timeline>
@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       ftitle: "",
-      value1: "",
+      uname: "",
       fpInfoTitle: {},
       fpInfoContent: [],
       loading: true
@@ -96,6 +96,7 @@ export default {
     getRouterParms() {
       // console.log(this.$route.params.ptitle);
       this.ftitle = this.$route.params.ptitle;
+      this.uname=this.$route.params.uname
     },
     getfootprintContent() {
       var fptitle = this.ftitle;

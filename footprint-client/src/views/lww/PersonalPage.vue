@@ -74,7 +74,7 @@ export default {
       var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
       var role = userinfo.urole;
       if (role == 3) {
-        this.fpshow = true;
+        this.fpshow = false;
         this.cellshow = true;
         this.themeshow = true;
         this.usershow = true;

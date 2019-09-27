@@ -66,7 +66,7 @@
                 type="textarea"
                 placeholder="请输入内容"
                 v-model="textarea[count-1]"
-                maxlength="100"
+                maxlength="300"
                 show-word-limit
               ></el-input>
             </div>
