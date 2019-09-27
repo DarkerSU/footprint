@@ -48,9 +48,9 @@ export default {
     },
     //删除函数
     handleRemove(file, fileList) {
-      console.log(file.uid);
+      // console.log(file.uid);
       // this.
-      console.log(this.FpImgUrls);
+      // console.log(this.FpImgUrls);
     },
     handlePictureCardPreview(file) {
       // console.log(file);
@@ -61,7 +61,7 @@ export default {
     // 上传成功函数
     handlesuccess(response, file, fileList) {
       // console.log(response.data);
-      console.log(this.count)
+      // console.log(this.count)
       //  console.log(this.FpImgUrls);
       // this.fpimgurl.push(response.data);
       if(this.FpImgUrls[this.count]){
@@ -75,14 +75,14 @@ export default {
         this.FpImgUrls[this.count].push(response.data)
         // 
       }
-       console.log(this.FpImgUrls);
+      //  console.log(this.FpImgUrls);
        var obj=JSON.stringify(this.FpImgUrls)
        this.$emit("getImgUplod", obj);
-      console.log(this.FpImgUrls[this.count]);
+      // console.log(this.FpImgUrls[this.count]);
     },
     // 上传错误函数
     handleerror(err, file, fileList) {
-      console.log(err);
+      // console.log(err);
     },
     // 文件上传时的钩子函数，
     handleprogress(event, file, fileList) {

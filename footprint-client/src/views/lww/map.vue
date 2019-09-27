@@ -132,9 +132,9 @@ export default {
     }
   },
   created() {
-    console.log(this.footprintobj);
-    console.log(this.$store.getters.getlng_lat);
-    console.log(this.polylinePath);
+    // console.log(this.footprintobj);
+    // console.log(this.$store.getters.getlng_lat);
+    // console.log(this.polylinePath);
   }
 };
 </script>

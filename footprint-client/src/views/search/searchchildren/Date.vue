@@ -22,7 +22,7 @@ export default {
     methods:{
         // 用于子组件给父组件传值
     handleselect(cityname) {
-      console.log(`要给home组件的值：${cityname}`);
+      // console.log(`要给home组件的值：${cityname}`);
       this.$emit("getselect", cityname);
     },
     }

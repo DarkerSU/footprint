@@ -353,12 +353,12 @@ export default {
     },
     // 上传成功函数
     handlesuccess(response, file, fileList) {
-      console.log(response.data);
+      // console.log(response.data);
       this.userlist.upic =response.data;
     },
     // 上传错误函数
     handleerror(err, file, fileList) {
-      console.log(err);
+      // console.log(err);
     },
     // 文件上传时的钩子函数，
     handleprogress(event, file, fileList) {},
@@ -366,7 +366,7 @@ export default {
     getUserInfo() {
       // sessionUseriInfo
       var userinfo = JSON.parse(sessionStorage.getItem("UserInfo"));
-      console.log(userinfo);
+      // console.log(userinfo);
       this.sessionUseriInfo.unum = userinfo.unum;
       this.userlist.upic=userinfo.upic;
       this.userlist.uphone=userinfo.uphone;

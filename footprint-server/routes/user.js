@@ -55,6 +55,7 @@ router.get("/page", (req, res) => {
         }
     })
 });
+// 通过用户名查询
 router.get("/unamReg", (req, res) => {
     console.log("用户昵称查重验证。。。。。。。。。。。。。");
     var uname = req.query.uname;
@@ -65,6 +66,20 @@ router.get("/unamReg", (req, res) => {
             res.send({ code: 1, msg: "昵称存在,请换个昵称" });
         } else {
             res.send({ code: -1, msg: "昵称不存在" });
+        }
+    })
+})
+// 通过用户账号查询用户是否存在。用于忘记密码组件
+router.get("/unumReg", (req, res) => {
+    console.log("用户账号查询是否验证。。。。。。。。。。。。。");
+    var unum = req.query.unum;
+    var sql = `select uid,uname,uphone from user where unum=?`;
+    pool.query(sql, unum, (err, result) => {
+        if (result.length > 0) {
+            console.log("账号存在");
+            res.send({ code: 1, msg: "账号存在,可以修改密码" });
+        } else {
+            res.send({ code: -1, msg: "账号不存在" });
         }
     })
 })
@@ -93,7 +108,7 @@ router.post("/updateuserinfo", (req, res) => {
 router.put("/updateUserPwd", (req, res) => {
     console.log("用户修改密码请求。。。。。。。。。")
     var obj = req.body;
-    var sql = "UPDATE user set upwd=md(?)  where unum=?";
+    var sql = "UPDATE user set upwd=md5(?)  where unum=?";
     pool.query(sql, [obj.newpwd1, obj.unum], (err, result) => {
         if (err) throw err;
         if (result.affectedRows > 0) {

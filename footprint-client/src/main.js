@@ -9,6 +9,8 @@ import qs from 'qs'
 import moment from 'moment'
 import Vuex from 'vuex'
 import BaiduMap from 'vue-baidu-map'
+import Myheaders from "./components/sfq/Myheader";
+import Myfooters from "./views/zxm/Myfooter";
 
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
@@ -24,12 +26,20 @@ axios.defaults.withCredentials=true;
 axios.defaults.baseURL = "http://127.0.0.1:5000";
 // axios.defaults.imgURL="http://127.0.0.1:5000/img/file"
 
+Vue.component("myheaders",Myheaders);
+Vue.component("myfooters",Myfooters);
 
 Vue.use(ElementUI);
 Vue.use(Echarts);
 Vue.use(BaiduMap, {
   ak: '6CVV3SueRX6heAZakGOrIV7A0MzDHfNo' //官方提供的ak秘钥
 });
+
+import Router from 'vue-router'
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 const storeVuex=new Vuex.Store({
   state:{

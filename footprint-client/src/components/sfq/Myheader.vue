@@ -28,7 +28,7 @@
                   <a href>行摄攻略</a>
                 </li>
                 <li>
-                  <a href>行摄最美中国</a>
+                  <a href>庆祝70华诞</a>
                 </li>
                 <li>
                   <a href>我的足迹</a>
@@ -140,7 +140,7 @@
         <el-checkbox>自动登录</el-checkbox>
         <!-- 忘记密码 -->
         <div>
-          <el-link :underline="false">忘记密码?</el-link>
+          <el-link :underline="false" @click="forgetpwd">忘记密码?</el-link>
         </div>
       </div>
       <!-- 登录注册按钮 -->
@@ -264,6 +264,10 @@ export default {
     };
   },
   methods: {
+    /* 忘记密码 */
+    forgetpwd(){
+      this.$router.push('/forgetpwd')
+    },
     reset(done) {
       this.clear();
       done();
@@ -328,7 +332,6 @@ export default {
     },
     // 注册-查询要插入的账号在数据库中是否存在
     register() {
-      console.log(this.form2.phone);
       this.axios
         .get("/login/register", {
           params: {

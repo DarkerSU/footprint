@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     selected(i) {
-      console.log(i);
+      // console.log(i);
       switch (i) {
         case 0:
           this.select1 = 1;
@@ -62,7 +62,7 @@ export default {
       }
     },
     updateTheme(value){
-        console.log("value:"+value)
+        // console.log("value:"+value)
         this.$store.commit("updateTheme",value)
     }
   }

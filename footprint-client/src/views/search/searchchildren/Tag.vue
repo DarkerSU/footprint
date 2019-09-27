@@ -21,7 +21,7 @@ export default {
   methods: {
       // 用于子组件给父组件传值
     handleselect(ttitle) {
-      console.log(`要给home组件的值：${ttitle}`);
+      // console.log(`要给home组件的值：${ttitle}`);
       this.$emit("getselect", ttitle);
     },
     getTag() {
@@ -33,10 +33,10 @@ export default {
         })
         .then(res => {
           if (res.data.code == 1) {
-            console.log("查询标签成功");
+            // console.log("查询标签成功");
             this.tagList = res.data.data;
           } else {
-            console.log("查询标签失败");
+            // console.log("查询标签失败");
           }
         });
     }

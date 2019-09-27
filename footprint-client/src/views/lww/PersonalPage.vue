@@ -21,8 +21,8 @@
           <span class="side-title">收藏足迹</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">已收藏足迹</el-menu-item>
-          <el-menu-item index="2-2">已评论足迹</el-menu-item>
+          <el-menu-item index="2-1" @click="handleselect(2.1)">已收藏足迹</el-menu-item>
+          <el-menu-item index="2-2" @click="handleselect(2.2)">已评论足迹</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
@@ -100,10 +100,10 @@ export default {
       }
     },
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     // 用于子组件给父组件传值
     handleselect(value) {

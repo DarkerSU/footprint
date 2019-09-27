@@ -60,7 +60,7 @@ export default {
     },
     //删除函数
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       // console.log(file);
@@ -70,14 +70,14 @@ export default {
     },
     // 上传成功函数
     handlesuccess(response, file, fileList) {
-      console.log(response);
+      // console.log(response);
       this.imageUrl = URL.createObjectURL(file.raw);
       // console.log(file);
-      console.log(fileList[0]);
+      // console.log(fileList[0]);
     },
     // 上传错误函数
     handleerror(err, file, fileList) {
-      console.log(err);
+      // console.log(err);
     },
     // 文件上传时的钩子函数，
     handleprogress(event, file, fileList) {
