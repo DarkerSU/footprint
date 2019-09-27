@@ -102,11 +102,12 @@ export default {
   height: 70%;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  overflow: hidden;
   /* border: 1px solid rgb(218, 48, 48); */
 }
 .blockshow .blockshow-img img {
   width: 100%;
-  height: 49%;
+  /* height: 49%; */
   /* border-radius: 8px; */
   /* margin-bottom: px; */
 }

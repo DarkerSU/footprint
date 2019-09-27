@@ -75,12 +75,12 @@ export default {
           this.isRperdefault = false;
           break;
         case 2.1:
-          this.$router.push("/");
+          this.$router.push("/collectfootprint");
           this.isRouterAlive = true;
           this.isRperdefault = false;
           break;
         case 2.2:
-          this.$router.push("/");
+          this.$router.push("/commentfootprint");
           this.isRouterAlive = true;
           this.isRperdefault = false;
           break;

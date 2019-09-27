@@ -52,7 +52,7 @@
             <span>时间：{{item.spfpdate}}</span>
           </div>
           <div class="showTaglist">
-            <el-tag v-for="(item1,x) of item.sptagList" :key="x" type="success" closable>{{item1}}</el-tag>
+            <el-tag v-for="(item1,x) of item.sptagList" :key="x" type="success" >{{item1}}</el-tag>
           </div>
 
           <div class="showImg">
@@ -149,7 +149,7 @@ export default {
   
 } */
 .showtime-content{
-  margin: 30px 40px;
+  margin: 40px 50px 40px 40px;
   min-height: 500px;
 }
 .show-footprint-title {

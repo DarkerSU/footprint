@@ -13,6 +13,8 @@ import Tablee from './views/sfq/Tablee'
 import UserManagement from './views/sfq/UserManagement'
 import Showblockfootprint from './views/sxp/Showblockfootprint'
 import Forgetupwd from './views/zxm/Forgetupwd'
+import CollectFootprint from './views/sxp/CollectFootprint'
+import CommentFootprint from './views/sxp/CommentFootprint'
 
 // import Test1 from './views/sxp/Test1.vue';
 Vue.use(Router)
@@ -49,6 +51,16 @@ export default new Router({
           path: '/showblockfootprint',
           name: 'showblockfootprint',
           component: Showblockfootprint,
+        },
+        {
+          path: '/collectfootprint',
+          name: 'collectfootprint',
+          component: CollectFootprint,
+        },
+        {
+          path: '/commentfootprint',
+          name: 'commentfootprint',
+          component: CommentFootprint,
         },
         {
           path: '/footprintTheme',

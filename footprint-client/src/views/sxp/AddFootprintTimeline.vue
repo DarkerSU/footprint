@@ -144,7 +144,7 @@ export default {
 
       /* 图片子组件参数 */
       fpImgUpload: [],
-      imgnum: 0,
+      imgnum: 0
     };
   },
   components: {
@@ -280,7 +280,7 @@ export default {
         spfpdate: this.fpdate,
         sptagList: this.tagList,
         sptextarea: this.textarea,
-        spimgUrl:this.fpImgUpload,
+        spimgUrl: this.fpImgUpload
       };
       var datainfo = {
         unum: userinfo.unum,
@@ -309,18 +309,23 @@ export default {
                       spfpdate: data.spfpdate[i],
                       sptagList: JSON.stringify(data.sptagList[i]),
                       sptextarea: data.sptextarea[i],
-                      spimgUrl:JSON.stringify(data.spimgUrl[i]),
+                      spimgUrl: JSON.stringify(data.spimgUrl[i])
                     }
                   })
                   .then(res1 => {
                     if (res1.data.code == 1) {
                       console.log("足迹内容插入成功");
-        
+                      this.country = [];
+                      this.site = [];
+                      this.fpdate = [];
+                      this.tagList = [];
+                      this.textarea = [];
+                      this.fpImgUpload = [];
                       this.$message({
                         type: "success",
                         message: "新增足迹成功!"
                       });
-                      return ;
+                      return;
                     }
                   });
               }

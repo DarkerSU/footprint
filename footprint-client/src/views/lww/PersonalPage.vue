@@ -21,8 +21,8 @@
           <span class="side-title">收藏足迹</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">已收藏足迹</el-menu-item>
-          <el-menu-item index="2-2">已评论足迹</el-menu-item>
+          <el-menu-item index="2-1" @click="handleselect(2.1)">已收藏足迹</el-menu-item>
+          <el-menu-item index="2-2" @click="handleselect(2.2)">已评论足迹</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
