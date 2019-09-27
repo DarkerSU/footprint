@@ -15,6 +15,7 @@ import Showblockfootprint from './views/sxp/Showblockfootprint'
 import Forgetupwd from './views/zxm/Forgetupwd'
 import CollectFootprint from './views/sxp/CollectFootprint'
 import CommentFootprint from './views/sxp/CommentFootprint'
+import Fp70 from './views/Fp70'
 
 // import Test1 from './views/sxp/Test1.vue';
 Vue.use(Router)
@@ -31,7 +32,11 @@ export default new Router({
       name: 'showfpTimeline',
       component: ShowFootprintTimeline,
     },
-    
+    {
+      path: '/fp70',
+      name: 'fp70',
+      component: Fp70,
+    },
     {
       path: '/forgetpwd',
       name: 'forgetpwd',

@@ -27,8 +27,8 @@
                 <li>
                   <a href>行摄攻略</a>
                 </li>
-                <li>
-                  <a href>庆祝70华诞</a>
+                <li @click="fp70">
+                  <span>庆祝70华诞</span>
                 </li>
                 <li>
                   <a href>我的足迹</a>
@@ -264,6 +264,9 @@ export default {
     };
   },
   methods: {
+    fp70(){
+      this.$router.push("/fp70")
+    },
     /* 忘记密码 */
     forgetpwd(){
       this.$router.push('/forgetpwd')
@@ -553,11 +556,19 @@ export default {
   margin: 0;
   padding: 0 20px;
   display: inline-block;
+  color: rgb(255, 0, 0);
+}
+.header .headerC .headerM ul li:hover{
+  transform: rotate(360deg);
+  transition: All 0.5s ease-in-out;
 }
 
 .header .headerC .headerM li a {
   color: #fff;
   text-decoration: none;
+}
+.header .headerC .headerM li span{
+  font-size:20px; 
 }
 
 .header .headerC .headerR {
