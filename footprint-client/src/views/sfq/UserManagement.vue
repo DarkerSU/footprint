@@ -194,6 +194,7 @@ export default {
       //       }
       //     );
       this.model_role = true;
+<<<<<<< HEAD
       // console.log(index, row);
       this.rowRole = row;
     },
@@ -206,6 +207,8 @@ export default {
               confirmButtonText: "确定"
             }
           );
+=======
+>>>>>>> e51856d90d2ed51c9cebba571682dec5498147ee
       // console.log(index, row);
     },
     modelRole() {
@@ -217,6 +220,18 @@ export default {
             }
           );
     },
+<<<<<<< HEAD
+=======
+    modelRole() {
+          this.$alert(
+            "此模块暂未对您开放",
+            "消息",
+            {
+              confirmButtonText: "确定"
+            }
+          );
+    },
+>>>>>>> e51856d90d2ed51c9cebba571682dec5498147ee
     getuser() {
       this.axios.get("/role").then(res => {
         // console.log(res.data.data);
