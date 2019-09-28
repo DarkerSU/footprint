@@ -95,7 +95,7 @@
           <!--  -->
           <div class="fpmodel" v-for="(item,index) of fpmodel" :key="index">
             <el-checkbox
-              :indeterminate="item.isIndeterminate"    
+              :indeterminate="item.isIndeterminate"
               v-model="item.checkAll"
               @change="handleCheckAllChange"
             >{{item.name}}</el-checkbox>
@@ -136,13 +136,43 @@ export default {
       formLabelWidth: "100px",
 
       fpmodel: [
-        { name: "我的足迹",checkAll:false,isIndeterminate:true, submodel: ["添加足迹", "查看足迹"],checkedMyfp:[] },
-        { name: "收藏足迹",checkAll:false,isIndeterminate:true, submodel: ["已收藏足迹", "已评论足迹"],checkedMyfp:[] },
-        { name: "主体设置",checkAll:false,isIndeterminate:true, submodel: ["选择主体"],checkedMyfp:[] },
-        { name: "用户管理",checkAll:false,isIndeterminate:true, submodel: ["用户列表", "角色授权"],checkedMyfp:[] },
-        { name: "设置",checkAll:false,isIndeterminate:true, submodel: ["修改信息", "修改密码"],checkedMyfp:[] }
+        {
+          name: "我的足迹",
+          checkAll: false,
+          isIndeterminate: true,
+          submodel: ["添加足迹", "查看足迹"],
+          checkedMyfp: []
+        },
+        {
+          name: "收藏足迹",
+          checkAll: false,
+          isIndeterminate: true,
+          submodel: ["已收藏足迹", "已评论足迹"],
+          checkedMyfp: []
+        },
+        {
+          name: "主体设置",
+          checkAll: false,
+          isIndeterminate: true,
+          submodel: ["选择主体"],
+          checkedMyfp: []
+        },
+        {
+          name: "用户管理",
+          checkAll: false,
+          isIndeterminate: true,
+          submodel: ["用户列表", "角色授权"],
+          checkedMyfp: []
+        },
+        {
+          name: "设置",
+          checkAll: false,
+          isIndeterminate: true,
+          submodel: ["修改信息", "修改密码"],
+          checkedMyfp: []
+        }
       ],
-      
+
       // 弹框中多选框相关属性
       checkAll: false /* 全选状态 */,
       checkedMyfp: [] /* 选择的模块名 */,
@@ -186,80 +216,37 @@ export default {
     },
     // 模块-角色授权模式
     handleEdit(index, row) {
-      //  this.$alert(
-      //       "此模块暂未对您开放",
-      //       "消息",
-      //       {
-      //         confirmButtonText: "确定"
-      //       }
-      //     );
       this.model_role = true;
-<<<<<<< HEAD
-      // console.log(index, row);
       this.rowRole = row;
     },
     // 删除角色
     handleDelete(index, row) {
-       this.$alert(
-            "您暂无此权限",
-            "消息",
-            {
-              confirmButtonText: "确定"
-            }
-          );
-=======
->>>>>>> e51856d90d2ed51c9cebba571682dec5498147ee
-      // console.log(index, row);
+      this.$alert("您暂无此权限", "消息", {
+        confirmButtonText: "确定"
+      });
     },
     modelRole() {
-      this.$alert(
-            "您暂无此权限",
-            "消息",
-            {
-              confirmButtonText: "确定"
-            }
-          );
+      this.$alert("您暂无此权限", "消息", {
+        confirmButtonText: "确定"
+      });
     },
-<<<<<<< HEAD
-=======
     modelRole() {
-          this.$alert(
-            "此模块暂未对您开放",
-            "消息",
-            {
-              confirmButtonText: "确定"
-            }
-          );
+      this.$alert("此模块暂未对您开放", "消息", {
+        confirmButtonText: "确定"
+      });
     },
->>>>>>> e51856d90d2ed51c9cebba571682dec5498147ee
+
     getuser() {
       this.axios.get("/role").then(res => {
-        // console.log(res.data.data);
         var data1 = res.data.data;
-
-        // for (var i = 0; i < data1.length; i++) {
-        // data1[i].addfp = 1.1;
-        // data1[i].myfp = 1.2;
-        // data1[i].collfp = 2.1;
-        // data1[i].commentfp = 2.2;
-        // data1[i].themefp = 3.1;
-        // data1[i].tablefp = 4.1;
-        // data1[i].limitfp = 4.2;
-        // data1[i].perfp = 5.1;
-        // data1[i].pwdfp = 5.2;
-        // }
         this.tableData = data1;
-        // delete
-        // xconsole.log(this.tableData);
       });
     },
     handleSelectionChange(selection, row) {
       console.log(selection);
-
       console.log(row);
     }
   },
-
   created() {
     this.getuser();
   }
@@ -276,7 +263,7 @@ export default {
 .model-role .el-dialog .el-dialog__header {
   border-bottom: 1px solid #e6e6e6;
 }
-.model-role .fpmodel{
-  padding:5px 35px;
+.model-role .fpmodel {
+  padding: 5px 35px;
 }
 </style>
