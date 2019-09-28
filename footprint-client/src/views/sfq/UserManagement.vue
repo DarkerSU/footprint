@@ -186,14 +186,14 @@ export default {
     },
     // 模块-角色授权模式
     handleEdit(index, row) {
-       this.$alert(
-            "此模块暂未对您开放",
-            "消息",
-            {
-              confirmButtonText: "确定"
-            }
-          );
-      // this.model_role = true;
+      //  this.$alert(
+      //       "此模块暂未对您开放",
+      //       "消息",
+      //       {
+      //         confirmButtonText: "确定"
+      //       }
+      //     );
+      this.model_role = true;
       // console.log(index, row);
       this.rowRole = row;
     },
@@ -208,7 +208,15 @@ export default {
           );
       // console.log(index, row);
     },
-    modelRole() {},
+    modelRole() {
+      this.$alert(
+            "您暂无此权限",
+            "消息",
+            {
+              confirmButtonText: "确定"
+            }
+          );
+    },
     getuser() {
       this.axios.get("/role").then(res => {
         // console.log(res.data.data);
