@@ -17,16 +17,18 @@ import CollectFootprint from './views/sxp/CollectFootprint'
 import CommentFootprint from './views/sxp/CommentFootprint'
 import Fp70 from './views/Fp70'
 import HomeShowFP from './views/sxp/HomeShowFP'
-
-// import Test1 from './views/sxp/Test1.vue';
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    // {
+    //   path:'/'
+    // },
     {
       path: '/',
       name: 'home',
       component: Home,
+      // meta:islogin,
     },
     {
       path: '/showfpTimeline',

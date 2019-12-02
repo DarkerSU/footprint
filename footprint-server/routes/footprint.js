@@ -106,8 +106,7 @@ router.get("/pageAllshow", (req, res) => {
             res.send({ code: 1, mag: '足迹查询成功',data1:result1})
         } else {
             res.send({ code: -1, mag: '足迹查询失败' });
-        }
-       
+        }  
     })
 })
 

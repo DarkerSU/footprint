@@ -274,7 +274,7 @@ export default {
           }
         }
         this.tableData = res.data.data;
-        // console.log(this.tableData)
+        console.log(this.tableData)
         this.total = res.data.sum;
       });
     }

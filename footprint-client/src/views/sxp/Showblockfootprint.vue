@@ -68,6 +68,8 @@ export default {
         .then(res => {
           if (res.data.code == 1) {
             var result = res.data.data1;
+            // 这TM是用来数组去重的
+            console.log(result)
             for (var i = 0; i < result.length; i++) {
               if (this.Content.ptitle != result[i].ptitle) {
                 this.Content.ptitle = result[i].ptitle;
